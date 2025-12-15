@@ -112,10 +112,14 @@
           </h1>
         </div>
 
-        <!-- Rôles rotatifs -->
-        <div class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-['Share_Tech_Mono'] min-h-[40px] mt-4 mb-8">
+        <!-- Rôles rotatifs avec animation slide -->
+        <div class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-['Share_Tech_Mono'] min-h-[40px] mt-4 mb-8 overflow-hidden relative">
           <span class="text-green-400 mr-2">&gt;</span>
-          <span>{{ currentRole }}</span>
+          <div class="inline-block relative">
+            <Transition name="slide-up" mode="out-in">
+              <span :key="currentRole" class="inline-block">{{ currentRole }}</span>
+            </Transition>
+          </div>
         </div>
 
         <!-- Boutons -->
@@ -265,53 +269,25 @@ const initGeekBackground = () => {
   })
 }
 
-// Variable pour stocker le timeout de l'animation des rôles
-let roleAnimationTimeout = null
 
-// Animation typing pour les rôles
-const typeRole = () => {
-  const role = roles.value[roleIndex]
-  let charIndex = 0
-  let isDeleting = false
-
-  const type = () => {
-    if (isDeleting) {
-      currentRole.value = role.substring(0, charIndex - 1)
-      charIndex--
-    } else {
-      currentRole.value = role.substring(0, charIndex + 1)
-      charIndex++
-    }
-
-    let typeSpeed = isDeleting ? 50 : 100
-
-    if (!isDeleting && charIndex === role.length) {
-      isDeleting = true
-      typeSpeed = 2000 // Pause à la fin
-    } else if (isDeleting && charIndex === 0) {
-      // Passer au rôle suivant
-      roleIndex = (roleIndex + 1) % roles.value.length
-      // Recommencer l'animation avec le nouveau rôle
-      roleAnimationTimeout = setTimeout(typeRole, 500)
-      return
-    }
-
-    roleAnimationTimeout = setTimeout(type, typeSpeed)
-  }
-
-  type()
+// Rotation simple des rôles avec animation slide
+const rotateRoles = () => {
+  roleInterval = setInterval(() => {
+    roleIndex = (roleIndex + 1) % roles.value.length
+    currentRole.value = roles.value[roleIndex]
+  }, 3000) // Change tous les 3 secondes
 }
 
 // Watcher pour réinitialiser l'animation des rôles quand la langue change
 watch(locale, () => {
   // Arrêter l'animation en cours
-  if (roleAnimationTimeout) {
-    clearTimeout(roleAnimationTimeout)
+  if (roleInterval) {
+    clearInterval(roleInterval)
   }
   // Réinitialiser et redémarrer
   roleIndex = 0
-  currentRole.value = ''
-  setTimeout(typeRole, 500)
+  currentRole.value = roles.value[0]
+  rotateRoles()
 })
 
 // Animation typing
@@ -332,8 +308,8 @@ onMounted(() => {
 
   // Démarrer l'animation des rôles après celle du nom  
   setTimeout(() => {
-    currentRole.value = ''
-    typeRole()
+    currentRole.value = roles.value[0]
+    rotateRoles()
   }, 2000)
 })
 
@@ -387,6 +363,34 @@ onUnmounted(() => {
 .animate-sparkle {
   animation: sparkle 1.5s ease-in-out infinite;
 }
+
+/* ===== ANIMATION SLIDE-UP POUR LES RÔLES ===== */
+
+/* Transition slide-up : sortie */
+.slide-up-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Transition slide-up : entrée */
+.slide-up-enter-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.slide-up-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 /* Style du bouton Hire Me */
 .hire-me-btn {

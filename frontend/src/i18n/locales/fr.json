@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Salut, je suis ",
+    "roles": {
+      "webMobile": "Développeur Web & Mobile",
+      "game": "Développeur de Jeux",
+      "uiux": "Passionné de Design UI/UX",
+      "itSecurity": "Spécialiste IT & Cybersécurité",
+      "ai": "Passionné d'IA & Innovation",
+      "fullstack": "Résolveur de Problèmes Full-Stack"
+    },
+    "exploreProjects": "Explorer mes Projets",
+    "hireMe": "Recrutez-moi",
+    "stats": {
+      "experience": "Expérience",
+      "technologies": "Technologies",
+      "projects": "Projets",
+      "availability": "Disponible"
+    },
+    "scrollDown": "// défiler vers le bas"
+  },
+  "about": {
+    "title": "À Propos de Moi",
+    "whoAmI": "Qui suis-je ?",
+    "description": "Développeur passionné avec une expertise en développement web, mobile et jeux vidéo. Je transforme des idées en solutions numériques innovantes.",
+    "education": {
+      "title": "Formation",
+      "degree": "Licence en Informatique",
+      "university": "Université de Technologie",
+      "year": "2020 - 2023"
+    },
+    "certifications": {
+      "title": "Certifications",
+      "items": [
+        "Python pour tous - Coursera",
+        "Développement Web Full-Stack",
+        "Cybersécurité Avancée"
+      ]
+    },
+    "interests": {
+      "title": "Centres d'Intérêt",
+      "items": [
+        "Intelligence Artificielle",
+        "Développement de Jeux",
+        "Cybersécurité",
+        "Open Source"
+      ]
+    }
+  },
+  "skills": {
+    "title": "Mes Compétences",
+    "subtitle": "Technologies et outils que je maîtrise",
+    "dragToScroll": "Glissez pour faire défiler"
+  },
+  "projects": {
+    "title": "Mes Projets",
+    "subtitle": "Découvrez mes réalisations récentes",
+    "viewProject": "Voir le Projet",
+    "viewCode": "Voir le Code",
+    "allProjects": "Tous les Projets",
+    "filter": {
+      "all": "Tous",
+      "web": "Web",
+      "mobile": "Mobile",
+      "game": "Jeux",
+      "ai": "IA"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Mes derniers articles et réflexions",
+    "readMore": "Lire la suite",
+    "readingTime": "min de lecture",
+    "publishedOn": "Publié le",
+    "author": "Par",
+    "tags": "Tags",
+    "relatedPosts": "Articles similaires",
+    "backToBlog": "Retour au Blog",
+    "noArticles": "Aucun article disponible pour le moment.",
+    "articleNotFound": "Article introuvable"
+  },
+  "contact": {
+    "title": "Contactez-moi",
+    "subtitle": "Travaillons ensemble sur votre prochain projet",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Message",
+      "send": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès !",
+      "error": "Erreur lors de l'envoi du message"
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Téléphone",
+      "location": "Localisation"
+    },
+    "social": {
+      "title": "Suivez-moi",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter"
+    }
+  },
+  "footer": {
+    "rights": "Tous droits réservés",
+    "madeWith": "Fait avec",
+    "by": "par"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "download": "Télécharger"
+  }
+}

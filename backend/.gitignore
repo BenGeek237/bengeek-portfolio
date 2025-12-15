@@ -1,0 +1,43 @@
+# Créer le fichier .gitignore
+echo "# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.env.local
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+media/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vue
+dist/
+dist-ssr/
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Système
+.DS_Store
+Thumbs.db" > .gitignore
+
+# Créer un README.md
+echo "# Mon Portfolio Développeur
+
+Site portfolio moderne avec Django, Vue.js et Tailwind CSS." > README.md

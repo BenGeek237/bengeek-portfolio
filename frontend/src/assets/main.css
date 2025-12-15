@@ -1,0 +1,464 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles de base geek */
+@layer base {
+  /* Reset complet pour enlever tout espace */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    scroll-behavior: smooth;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+    /* Augmentation de la taille de base pour meilleure lisibilité */
+    /* Effet de scanlines très subtil */
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 18, 18, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* MODE LIGHT (par défaut) */
+  body {
+    @apply bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 transition-colors duration-500 ease-in-out;
+    /* Texture subtile pour le mode light */
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.03) 0%, transparent 20%),
+      radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.03) 0%, transparent 20%);
+  }
+
+  /* Animation fluide lors du changement de thème */
+  ::view-transition-group(root) {
+    animation-duration: 0.5s;
+  }
+
+  /* MODE DARK */
+  .dark body {
+    @apply bg-gradient-to-br from-gray-950 to-gray-900 text-gray-100;
+    /* Texture subtile pour le mode dark */
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 20%),
+      radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.05) 0%, transparent 20%);
+  }
+
+  /* Effet de terminal pour les titres */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  /* Classes unifiées pour les titres de sections */
+  .section-title {
+    @apply text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-3 tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto;
+  }
+
+  /* Container avec marges latérales augmentées */
+  .container {
+    @apply mx-auto px-6 sm:px-8 lg:px-12;
+    max-width: 1280px;
+    /* 1280px - 10% = 1152px */
+  }
+
+  /* Style pour le code - MODE LIGHT */
+  code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    @apply bg-gray-200 text-green-700 px-1 py-0.5 rounded;
+  }
+
+  /* Style pour le code - MODE DARK */
+  .dark code {
+    @apply bg-gray-800 text-terminal-green;
+  }
+
+  /* Scrollbar geek - MODE LIGHT */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-200;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-primary-600 to-secondary-500 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply from-primary-500 to-secondary-400;
+  }
+}
+
+/* Composants personnalisés */
+@layer components {
+
+  /* Bouton geek avec effet glow */
+  .btn-geek {
+    @apply font-geek tracking-wider uppercase px-6 py-3 rounded-lg bg-gradient-to-r from-primary-600 to-secondary-500 text-white font-semibold shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/50 hover:scale-[1.02] transition-all duration-300 border border-primary-400/20 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:hover:translate-x-[100%] before:transition-transform before:duration-700;
+  }
+
+  /* Carte avec effet terminal */
+  .card-geek {
+    @apply bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-700/50 shadow-2xl hover:border-primary-500/30 hover:shadow-primary-500/20 transition-all duration-300 p-6;
+  }
+
+  /* Badge de technologie */
+  .tech-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-sm font-mono border border-gray-700 hover:bg-gray-700 hover:border-primary-500 transition-colors;
+  }
+
+  /* Input style terminal */
+  .input-terminal {
+    @apply font-mono bg-gray-900 border border-gray-700 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 placeholder-gray-500 transition-all;
+  }
+
+  /* Section avec fond de code */
+  .section-code-bg {
+    @apply relative overflow-hidden;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(217, 70, 239, 0.03) 0%, transparent 50%);
+  }
+
+  /* Effet de ligne de commande */
+  .command-line {
+    @apply font-mono text-sm bg-gray-900 rounded-lg p-4 border-l-4 border-terminal-green;
+  }
+
+  /* Animation de typing */
+  .typing-animation {
+    @apply overflow-hidden border-r-2 border-terminal-green;
+    animation: typing 3.5s steps(40, end), blinkCaret 0.75s step-end infinite;
+  }
+
+  /* Effet matrix (très subtil) */
+  .matrix-bg {
+    background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(0, 255, 65, 0.02) 10%,
+        rgba(0, 255, 65, 0.01) 90%,
+        transparent 100%);
+  }
+}
+
+/* Classes utilitaires */
+@layer utilities {
+
+  /* Effet de glow text */
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 10px theme('colors.primary.500'),
+      0 0 20px theme('colors.primary.500');
+  }
+
+  /* Animation de pulse glow */
+  .animate-pulse-glow {
+    animation: pulseGlow 2s infinite;
+  }
+
+  /* Effet de verre (glassmorphism) */
+  .glass {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+
+  /* Effet de scanlines (très léger) */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 51%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.15;
+  }
+}
+
+/* Styles spécifiques pour le mode sombre */
+.dark .card-geek {
+  @apply from-gray-800 to-gray-900;
+}
+
+/* Animation de particules (optionnel - à ajouter si vous voulez) */
+.matrix-particle {
+  position: absolute;
+  width: 1px;
+  height: 20px;
+  background: linear-gradient(to bottom, transparent, theme('colors.matrix'), transparent);
+  animation: matrixFall linear infinite;
+}
+
+/* ===== MICRO-ANIMATIONS AVANCÉES ===== */
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Magnetic button effect */
+.btn-magnetic {
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-magnetic:hover {
+  transform: scale(1.05);
+}
+
+.btn-magnetic:active {
+  transform: scale(0.98);
+}
+
+/* Glow on hover */
+.glow-on-hover {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.glow-on-hover::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #10b981, #3b82f6, #8b5cf6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.glow-on-hover:hover::before {
+  opacity: 0.7;
+}
+
+/* Bounce animation */
+@keyframes bounce-subtle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+/* Shake animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Gradient text animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text-animated {
+  background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6, #10b981);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Reveal animation */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger children */
+.stagger-children>* {
+  opacity: 0;
+  animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger-children>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stagger-children>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stagger-children>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stagger-children>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.stagger-children>*:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.stagger-children>*:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* Smooth underline effect */
+.underline-animated {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.underline-animated:hover::after {
+  width: 100%;
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Rotate on hover */
+.rotate-on-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rotate-on-hover:hover {
+  transform: rotate(5deg);
+}
+
+/* Focus visible styles */
+*:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a,
+input,
+textarea,
+select {
+  transition: all 0.2s ease;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

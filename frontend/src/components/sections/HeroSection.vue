@@ -150,9 +150,9 @@
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto mt-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 max-w-2xl mx-auto mt-8">
           <div v-for="stat in stats" :key="stat.label"
-               class="bg-gray-900/40 border border-gray-800/50 rounded-lg p-3 md:p-4 group hover:border-green-500/50 hover:bg-gray-900/60 backdrop-blur-sm transition-all duration-500">
+               class="bg-gray-900/40 border border-gray-800/50 rounded-lg p-2 md:p-3 group hover:border-green-500/50 hover:bg-gray-900/60 backdrop-blur-sm transition-all duration-500">
             <div class="text-2xl md:text-3xl font-mono font-bold text-green-400 mb-1 group-hover:scale-110 transition-transform duration-500">
               {{ stat.value }}{{ stat.plus ? '+' : '' }}
             </div>

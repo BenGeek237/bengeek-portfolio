@@ -1,5 +1,5 @@
 /* Imports */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,17 +7,15 @@
 
 /* Styles de base geek */
 @layer base {
-
   /* Reset complet pour enlever tout espace */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-
+  
   html {
-    /* Police principale moderne et professionnelle */
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     scroll-behavior: smooth;
     font-size: 17px;
     margin: 0;
@@ -53,15 +51,15 @@
       radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.05) 0%, transparent 20%);
   }
 
-  /* Titres avec Inter - moderne et élégant */
+  /* Effet de terminal pour les titres */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: 700;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
     letter-spacing: -0.025em;
   }
 
@@ -82,17 +80,13 @@
   }
 
   /* Style pour le code - MODE LIGHT */
-  code,
-  .font-mono,
-  pre {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
     @apply bg-gray-200 text-green-700 px-1 py-0.5 rounded;
   }
 
   /* Style pour le code - MODE DARK */
-  .dark code,
-  .dark .font-mono,
-  .dark pre {
+  .dark code {
     @apply bg-gray-800 text-terminal-green;
   }
 

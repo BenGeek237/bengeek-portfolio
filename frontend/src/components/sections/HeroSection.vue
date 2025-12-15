@@ -103,17 +103,16 @@
 
         <!-- Titre principal -->
         <div class="mb-8" data-aos="fade-down" data-aos-delay="200">
-          <h1 class="hero-title font-bold px-2">
-            <span class="greeting-text text-gray-700 dark:text-gray-300 font-['Inter']">{{ t('hero.greeting') }}</span>
-            <br class="mobile-break" />
-            <span class="name-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Inter']">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold px-2">
+            <span class="text-gray-700 dark:text-gray-300 font-['Share_Tech_Mono']">{{ t('hero.greeting') }} </span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Share_Tech_Mono'] break-words">
               {{ displayedName }}<span class="text-green-400">|</span>
             </span>
           </h1>
         </div>
 
         <!-- Rôles rotatifs -->
-        <div class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-['Inter'] min-h-[40px] mt-4 mb-8">
+        <div class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-['Share_Tech_Mono'] min-h-[40px] mt-4 mb-8">
           <span class="text-green-400 mr-2">&gt;</span>
           <span>{{ currentRole }}</span>
         </div>
@@ -150,9 +149,9 @@
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 max-w-2xl mx-auto mt-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto mt-8">
           <div v-for="stat in stats" :key="stat.label"
-               class="bg-gray-900/40 border border-gray-800/50 rounded-lg p-2 md:p-3 group hover:border-green-500/50 hover:bg-gray-900/60 backdrop-blur-sm transition-all duration-500">
+               class="bg-gray-900/40 border border-gray-800/50 rounded-lg p-3 md:p-4 group hover:border-green-500/50 hover:bg-gray-900/60 backdrop-blur-sm transition-all duration-500">
             <div class="text-2xl md:text-3xl font-mono font-bold text-green-400 mb-1 group-hover:scale-110 transition-transform duration-500">
               {{ stat.value }}{{ stat.plus ? '+' : '' }}
             </div>
@@ -343,8 +342,7 @@ onUnmounted(() => {
 </script>
 
 <style>
-/* Police Inter déjà importée dans main.css */
-
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 /* Curseur clignotant */
 .text-green-400:last-child {
@@ -471,48 +469,10 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-/* ===== HERO TITLE RESPONSIVE ===== */
-
-/* Base styles pour le titre */
-.hero-title {
-  font-size: 2rem; /* 32px base */
-  line-height: 1.2;
-}
-
-.greeting-text {
-  display: inline;
-}
-
-.name-text {
-  display: inline;
-  white-space: nowrap;
-}
-
-/* Mobile break - caché par défaut, visible uniquement sur mobile */
-.mobile-break {
-  display: none; /* CACHÉ PAR DÉFAUT */
-}
-
-/* Mobile (très petits écrans) */
-@media (max-width: 374px) {
-  .hero-title {
-    font-size: 1.5rem !important; /* 24px */
-  }
-  
-  .mobile-break {
-    display: block !important; /* Saut de ligne sur très petit mobile */
-  }
-}
-
-/* Mobile standard */
 @media (max-width: 640px) {
-  .hero-title {
-    font-size: 1.875rem; /* 30px */
-    line-height: 1.3;
-  }
-  
-  .mobile-break {
-    display: block !important; /* Saut de ligne sur mobile */
+  h1 {
+    font-size: 2.25rem !important;
+    letter-spacing: -0.025em;
   }
 
   /* Réduire le nombre de colonnes Matrix sur mobile */
@@ -520,62 +480,4 @@ onUnmounted(() => {
     font-size: 0.7rem !important;
   }
 }
-
-/* Tablettes - UNE SEULE LIGNE */
-@media (min-width: 641px) and (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem; /* 32px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop petit - UNE SEULE LIGNE */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .hero-title {
-    font-size: 2.5rem; /* 40px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop moyen - UNE SEULE LIGNE */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .hero-title {
-    font-size: 3rem; /* 48px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop large - UNE SEULE LIGNE */
-@media (min-width: 1280px) and (max-width: 1535px) {
-  .hero-title {
-    font-size: 3.5rem; /* 56px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Extra large screens - UNE SEULE LIGNE */
-@media (min-width: 1536px) {
-  .hero-title {
-    font-size: 4rem; /* 64px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-
-
 </style>

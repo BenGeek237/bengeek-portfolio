@@ -103,9 +103,10 @@
 
         <!-- Titre principal -->
         <div class="mb-8" data-aos="fade-down" data-aos-delay="200">
-          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold px-2">
-            <span class="text-gray-700 dark:text-gray-300 font-['Share_Tech_Mono']">{{ t('hero.greeting') }} </span>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Share_Tech_Mono'] break-words">
+          <h1 class="hero-title font-bold px-2">
+            <span class="greeting-text text-gray-700 dark:text-gray-300 font-['Share_Tech_Mono']">{{ t('hero.greeting') }}</span>
+            <br class="mobile-break" />
+            <span class="name-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Share_Tech_Mono']">
               {{ displayedName }}<span class="text-green-400">|</span>
             </span>
           </h1>
@@ -469,10 +470,48 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
+/* ===== HERO TITLE RESPONSIVE ===== */
+
+/* Base styles pour le titre */
+.hero-title {
+  font-size: 2rem; /* 32px base */
+  line-height: 1.2;
+}
+
+.greeting-text {
+  display: inline;
+}
+
+.name-text {
+  display: inline;
+  white-space: nowrap;
+}
+
+/* Mobile break - caché par défaut, visible uniquement sur mobile */
+.mobile-break {
+  display: none; /* CACHÉ PAR DÉFAUT */
+}
+
+/* Mobile (très petits écrans) */
+@media (max-width: 374px) {
+  .hero-title {
+    font-size: 1.5rem !important; /* 24px */
+  }
+  
+  .mobile-break {
+    display: block !important; /* Saut de ligne sur très petit mobile */
+  }
+}
+
+/* Mobile standard */
 @media (max-width: 640px) {
-  h1 {
-    font-size: 2.25rem !important;
-    letter-spacing: -0.025em;
+  .hero-title {
+    font-size: 1.875rem; /* 30px */
+    line-height: 1.3;
+  }
+  
+  .mobile-break {
+    display: block !important; /* Saut de ligne sur mobile */
   }
 
   /* Réduire le nombre de colonnes Matrix sur mobile */
@@ -480,4 +519,60 @@ onUnmounted(() => {
     font-size: 0.7rem !important;
   }
 }
+
+/* Tablettes - UNE SEULE LIGNE */
+@media (min-width: 641px) and (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem; /* 32px - RÉDUIT */
+  }
+  
+  .mobile-break {
+    display: none !important; /* PAS de saut de ligne */
+  }
+}
+
+/* Desktop petit - UNE SEULE LIGNE */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .hero-title {
+    font-size: 2.5rem; /* 40px - RÉDUIT */
+  }
+  
+  .mobile-break {
+    display: none !important; /* PAS de saut de ligne */
+  }
+}
+
+/* Desktop moyen - UNE SEULE LIGNE */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .hero-title {
+    font-size: 3rem; /* 48px - RÉDUIT */
+  }
+  
+  .mobile-break {
+    display: none !important; /* PAS de saut de ligne */
+  }
+}
+
+/* Desktop large - UNE SEULE LIGNE */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .hero-title {
+    font-size: 3.5rem; /* 56px - RÉDUIT */
+  }
+  
+  .mobile-break {
+    display: none !important; /* PAS de saut de ligne */
+  }
+}
+
+/* Extra large screens - UNE SEULE LIGNE */
+@media (min-width: 1536px) {
+  .hero-title {
+    font-size: 4rem; /* 64px - RÉDUIT */
+  }
+  
+  .mobile-break {
+    display: none !important; /* PAS de saut de ligne */
+  }
+}
+
 </style>

@@ -113,7 +113,7 @@
         </div>
 
         <!-- Rôles rotatifs avec animation slide premium -->
-        <div class="role-container text-xl md:text-2xl font-['Share_Tech_Mono'] min-h-[50px] mt-4 mb-8 overflow-hidden relative inline-block px-6 py-3 rounded-lg">
+        <div class="role-container text-xl md:text-2xl font-['Share_Tech_Mono'] min-h-[50px] mt-4 mb-8 overflow-hidden relative inline-block">
           <span class="text-green-400 mr-2">&gt;</span>
           <div class="inline-block relative min-w-[300px] text-left">
             <Transition name="slide-up" mode="out-in">
@@ -402,28 +402,9 @@ onUnmounted(() => {
   transition: text-shadow 0.3s ease;
 }
 
-/* Conteneur des rôles avec effet glassmorphism */
+/* Conteneur des rôles - style épuré sans cadre */
 .role-container {
-  background: linear-gradient(135deg, 
-    rgba(16, 185, 129, 0.05) 0%, 
-    rgba(59, 130, 246, 0.05) 100%
-  );
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  backdrop-filter: blur(10px);
-  box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),
-    0 0 20px rgba(16, 185, 129, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-}
-
-.role-container:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 
-    0 8px 12px rgba(0, 0, 0, 0.15),
-    0 0 30px rgba(16, 185, 129, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
 }
 
 

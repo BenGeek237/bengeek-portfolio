@@ -1,6 +1,17 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "bengeek-portfolio",
+  "version": "2.0.0",
+  "description": "Portfolio moderne de Mamoudou Bia - Développeur Fullstack & Game Developer",
+  "author": "Mamoudou Bia <mamoudoubiya3@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenGeek237/bengeek-portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BenGeek237/bengeek-portfolio/issues"
+  },
+  "homepage": "https://github.com/BenGeek237/bengeek-portfolio#readme",
   "private": true,
   "type": "module",
   "engines": {

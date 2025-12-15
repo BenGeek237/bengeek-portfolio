@@ -28,6 +28,8 @@
 ### 🛠️ Technologies
 - **Frontend**: Vue.js 3 (Composition API) + Vite
 - **Backend**: Django 4 + Django REST Framework
+- **CMS**: WordPress (sites performants et personnalisés)
+- **Mobile**: Flutter (applications cross-platform)
 - **Styling**: Tailwind CSS + Custom Animations
 - **Database**: PostgreSQL (production) / SQLite (dev)
 - **Deployment**: Vercel (frontend) + Railway (backend)
@@ -54,8 +56,8 @@
 
 ```bash
 # Cloner le repo
-git clone https://github.com/mohamedelbachir/portfolio-project.git
-cd portfolio-project/frontend
+git clone https://github.com/BenGeek237/bengeek-portfolio.git
+cd bengeek-portfolio/frontend
 
 # Installer les dépendances
 npm install
@@ -275,10 +277,10 @@ Ce projet est sous licence MIT. Voir [LICENSE](LICENSE) pour plus de détails.
 **Mamoudou Bia**
 
 - 🌐 Portfolio: [https://mamoudou-bia.vercel.app](https://mamoudou-bia.vercel.app)
-- 💼 LinkedIn: [mohamed-el-bachir](https://linkedin.com/in/mohamed-el-bachir)
-- 🐙 GitHub: [@mohamedelbachir](https://github.com/mohamedelbachir)
-- 📧 Email: bengeeks@icloud.com
-- 📱 WhatsApp: [+237 698 340 664](https://wa.me/+237698340664)
+- 💼 LinkedIn: [bengeek237](https://linkedin.com/in/bengeek237)
+- 🐙 GitHub: [@BenGeek237](https://github.com/BenGeek237)
+- 📧 Email: mamoudoubiya3@gmail.com
+- 📱 WhatsApp: [+237 698 340 664](https://wa.me/237698340664)
 
 ## 🙏 Remerciements
 

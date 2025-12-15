@@ -80,6 +80,10 @@ const allSkills = [
   { name: 'React', icon: '⚛️', level: 80 },
   { name: 'Python', icon: '🐍', level: 95 },
   { name: 'Tailwind CSS', icon: '🎨', level: 95 },
+  { name: 'WordPress', icon: '📰', level: 90 },
+
+  // Mobile & Cross-platform
+  { name: 'Flutter', icon: '📱', level: 85 },
 
   // Game Dev & IA
   { name: 'Godot Engine', icon: '🎮', level: 85 },

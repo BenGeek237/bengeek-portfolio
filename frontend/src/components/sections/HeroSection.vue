@@ -104,16 +104,16 @@
         <!-- Titre principal -->
         <div class="mb-8" data-aos="fade-down" data-aos-delay="200">
           <h1 class="hero-title font-bold px-2">
-            <span class="greeting-text text-gray-700 dark:text-gray-300 font-['Share_Tech_Mono']">{{ t('hero.greeting') }}</span>
+            <span class="greeting-text text-gray-700 dark:text-gray-300 font-['Plus_Jakarta_Sans']">{{ t('hero.greeting') }}</span>
             <br class="mobile-break" />
-            <span class="name-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Share_Tech_Mono']">
+            <span class="name-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Plus_Jakarta_Sans']">
               {{ displayedName }}<span class="text-green-400">|</span>
             </span>
           </h1>
         </div>
 
         <!-- Rôles rotatifs avec animation slide premium -->
-        <div class="role-container text-xl md:text-2xl font-['Share_Tech_Mono'] min-h-[50px] mt-4 mb-8 overflow-hidden relative inline-block">
+        <div class="role-container text-xl md:text-2xl font-['Plus_Jakarta_Sans'] min-h-[50px] mt-4 mb-8 overflow-hidden relative inline-block">
           <span class="text-green-400 mr-2">&gt;</span>
           <div class="inline-block relative min-w-[300px] text-left">
             <Transition name="slide-up" mode="out-in">

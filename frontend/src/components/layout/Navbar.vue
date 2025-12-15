@@ -18,7 +18,7 @@
               
             </span>
             
-            <span class="text-[10px] font-mono tracking-wider"
+            <span class="text-[10px] font-sans tracking-wider font-medium"
                   :class="themeStore.darkMode ? 'text-gray-500' : 'text-gray-400'">
               // fullstack developer
             </span>
@@ -32,7 +32,7 @@
             <router-link
               v-if="item.id === 'projects'"
               to="/projects"
-              class="px-4 py-2 rounded-lg font-mono text-sm font-medium transition-all duration-300 relative group"
+              class="px-4 py-2 rounded-lg font-sans text-sm font-medium transition-all duration-300 relative group"
               :class="route.path.includes('/projects')
                 ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20' 
                 : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -46,7 +46,7 @@
             <button
               v-else
               @click="scrollToSection(item.id)"
-              class="px-4 py-2 rounded-lg font-mono text-sm font-medium transition-all duration-300 relative group"
+              class="px-4 py-2 rounded-lg font-sans text-sm font-medium transition-all duration-300 relative group"
               :class="activeSection === item.id 
                 ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20' 
                 : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -64,7 +64,7 @@
           <!-- Lien Blog -->
           <router-link 
             to="/blog"
-            class="px-4 py-2 rounded-lg font-mono text-sm font-medium transition-all duration-300"
+            class="px-4 py-2 rounded-lg font-sans text-sm font-medium transition-all duration-300"
             :class="route.path.includes('/blog')
               ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
               : 'text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -123,7 +123,7 @@
           <!-- Bouton Contact -->
           <button 
             @click="scrollToSection('contact')"
-            class="ml-2 px-5 py-2.5 rounded-lg font-mono text-sm font-bold bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:shadow-primary-500/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+            class="ml-2 px-5 py-2.5 rounded-lg font-sans text-sm font-bold bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:shadow-primary-500/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
           >
             <span>{{ t('nav.contact').toUpperCase() }}</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,7 +184,7 @@
                 v-if="item.id === 'projects'"
                 to="/projects"
                 @click="isMobileMenuOpen = false"
-                class="block w-full text-left py-3 px-4 rounded-lg font-mono text-sm font-medium transition-all duration-200"
+                class="block w-full text-left py-3 px-4 rounded-lg font-sans text-sm font-medium transition-all duration-200"
                 :class="route.path.includes('/projects')
                   ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
                   : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -201,7 +201,7 @@
               <button
                 v-else
                 @click="scrollToSection(item.id); isMobileMenuOpen = false"
-                class="block w-full text-left py-3 px-4 rounded-lg font-mono text-sm font-medium transition-all duration-200"
+                class="block w-full text-left py-3 px-4 rounded-lg font-sans text-sm font-medium transition-all duration-200"
                 :class="activeSection === item.id
                   ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
                   : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -217,7 +217,7 @@
             
             <router-link 
               to="/blog"
-              class="block py-3 px-4 rounded-lg font-mono text-sm font-medium transition-all duration-200"
+              class="block py-3 px-4 rounded-lg font-sans text-sm font-medium transition-all duration-200"
               :class="route.path.includes('/blog')
                 ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
                 : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50'"
@@ -232,7 +232,7 @@
             <!-- Toggle langue mobile -->
             <button 
               @click="toggleLanguage"
-              class="flex items-center justify-between w-full py-3 px-4 rounded-lg font-mono text-sm font-medium transition-all duration-200"
+              class="flex items-center justify-between w-full py-3 px-4 rounded-lg font-sans text-sm font-medium transition-all duration-200"
               :class="themeStore.darkMode
                 ? 'text-gray-300 hover:bg-gray-800/50'
                 : 'text-gray-600 hover:bg-gray-100'"
@@ -248,7 +248,7 @@
             <!-- Toggle thème mobile -->
             <button 
               @click="toggleTheme"
-              class="flex items-center justify-between w-full py-3 px-4 rounded-lg font-mono text-sm font-medium transition-all duration-200"
+              class="flex items-center justify-between w-full py-3 px-4 rounded-lg font-sans text-sm font-medium transition-all duration-200"
               :class="themeStore.darkMode
                 ? 'text-gray-300 hover:bg-gray-800/50'
                 : 'text-gray-600 hover:bg-gray-100'"
@@ -264,7 +264,7 @@
             <!-- Contact mobile -->
             <button 
               @click="scrollToSection('contact'); isMobileMenuOpen = false"
-              class="block w-full text-left py-3 px-4 mt-2 rounded-lg font-mono text-sm font-bold bg-gradient-to-r from-primary-600 to-purple-600 text-white shadow-lg transition-all duration-300 flex items-center justify-between"
+              class="block w-full text-left py-3 px-4 mt-2 rounded-lg font-sans text-sm font-bold bg-gradient-to-r from-primary-600 to-purple-600 text-white shadow-lg transition-all duration-300 flex items-center justify-between"
             >
               <span>{{ t('nav.contact').toUpperCase() }}</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

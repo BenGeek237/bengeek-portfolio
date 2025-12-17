@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Project
 from .serializers import ProjectSerializer
 
+#ici c'est la classe pour afficher les projets 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer

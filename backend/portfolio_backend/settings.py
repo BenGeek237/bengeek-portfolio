@@ -64,25 +64,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 
-# Database - Utiliser SQLite par défaut pour éviter les problèmes PostgreSQL
+# Database - Utiliser PostgreSQL si DATABASE_URL existe, sinon SQLite
 database_url = os.getenv('DATABASE_URL')
-if database_url and 'postgresql' in database_url:
-    # Seulement si PostgreSQL est explicitement configuré ET accessible
-    try:
-        import dj_database_url
-        DATABASES = {
-            'default': dj_database_url.config(default=database_url, conn_max_age=600)
-        }
-    except:
-        # Fallback sur SQLite si problème
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
+if database_url:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
 else:
-    # SQLite par défaut
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

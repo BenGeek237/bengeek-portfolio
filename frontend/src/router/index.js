@@ -9,6 +9,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
+        title: 'Accueil',
         transition: 'fade',
         index: 0
       }
@@ -18,6 +19,7 @@ const router = createRouter({
       name: 'blog',
       component: () => import('../views/BlogView.vue'),
       meta: {
+        title: 'Blog',
         transition: 'slide-left',
         index: 1
       }
@@ -27,6 +29,7 @@ const router = createRouter({
       name: 'projects',
       component: () => import('../views/ProjectsView.vue'),
       meta: {
+        title: 'Projets',
         transition: 'slide-left',
         index: 2
       }
@@ -37,6 +40,7 @@ const router = createRouter({
       component: () => import('../views/BlogPostView.vue'),
       props: true,
       meta: {
+        title: 'Article',
         transition: 'slide-up',
         index: 3
       }
@@ -46,6 +50,7 @@ const router = createRouter({
       name: 'not-found',
       component: () => import('../views/NotFoundView.vue'),
       meta: {
+        title: 'Page non trouvée',
         transition: 'fade',
         index: 4
       }
@@ -60,6 +65,14 @@ const router = createRouter({
     }
     return { top: 0, behavior: 'smooth' }
   },
+})
+
+// Mise à jour automatique du titre de la page
+router.beforeEach((to, from, next) => {
+  // Utiliser le titre de la route ou un titre par défaut
+  const defaultTitle = 'Mamoudou Bia - Développeur Full-Stack | Portfolio'
+  document.title = to.meta.title || defaultTitle
+  next()
 })
 
 export default router

@@ -9,8 +9,8 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div v-if="!limit" class="text-center mb-8" data-aos="fade-up">
         <div class="inline-block mb-4">
-          <span class="px-4 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-bold rounded-full border border-primary-200 dark:border-primary-800">
-            💼 PORTFOLIO
+          <span class="px-4 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-bold rounded-full border border-primary-200 dark:border-primary-800 flex items-center gap-2">
+            <BriefcaseIcon class="w-4 h-4" /> PORTFOLIO
           </span>
         </div>
         <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">
@@ -67,7 +67,7 @@
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:scale-105'
             ]"
           >
-            ✨ {{ locale === 'fr' ? 'Tous' : 'All' }}
+            <SparklesIcon class="w-4 h-4 inline mr-1" /> {{ locale === 'fr' ? 'Tous' : 'All' }}
           </button>
           <button 
             v-for="cat in categories"
@@ -80,7 +80,7 @@
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-primary-500 hover:scale-105'
             ]"
           >
-            {{ getCategoryIcon(cat) }} {{ cat }}
+            <component :is="getCategoryIcon(cat)" class="w-4 h-4 inline mr-2" /> {{ cat }}
           </button>
         </div>
 
@@ -99,7 +99,7 @@
               <!-- Status Badge -->
               <div class="absolute top-3 left-3 z-20 flex gap-1.5">
                 <span v-if="project.featured" class="px-2 py-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-black rounded-full shadow-lg flex items-center gap-1">
-                  ⭐ FEATURED
+                  <StarIcon class="w-3 h-3 fill-current" /> FEATURED
                 </span>
                 <span v-if="project.live_url" class="px-2 py-0.5 bg-green-500 text-white text-[10px] font-black rounded-full shadow-lg flex items-center gap-1 animate-pulse">
                   <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
@@ -124,7 +124,7 @@
                   />
                 </div>
                 <div v-else class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                  <span class="text-4xl">🚀</span>
+                  <RocketLaunchIcon class="w-12 h-12 text-gray-500" />
                 </div>
                 
                 <!-- Gradient Overlay -->
@@ -216,7 +216,7 @@
         <!-- Message si aucun projet -->
         <div v-if="filteredProjects.length === 0" class="text-center py-20" data-aos="fade-up">
           <div class="inline-block p-8 bg-gray-100 dark:bg-gray-800 rounded-3xl mb-6">
-            <div class="text-7xl mb-4">📭</div>
+            <InboxIcon class="w-16 h-16 text-gray-400" />
           </div>
           <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">
             {{ locale === 'fr' ? 'Aucun projet trouvé' : 'No projects found' }}
@@ -237,6 +237,10 @@
 import { ref, computed, onMounted } from 'vue'
 import { projectService } from '@/services/api'
 import { useI18n } from 'vue-i18n'
+import { 
+  BriefcaseIcon, SparklesIcon, RocketLaunchIcon, InboxIcon, StarIcon,
+  GlobeAltIcon, DevicePhoneMobileIcon, CpuChipIcon, PaintBrushIcon, BoltIcon, CubeIcon 
+} from '@heroicons/vue/24/outline'
 
 const { t, locale } = useI18n()
 
@@ -287,15 +291,16 @@ const getCategoryLabel = (category) => {
 }
 
 // Icônes des catégories
+// Icônes des catégories
 const getCategoryIcon = (category) => {
   const icons = {
-    'web': '🌐',
-    'mobile': '📱',
-    'ai': '🤖',
-    'design': '🎨',
-    'other': '⚡'
+    'web': GlobeAltIcon,
+    'mobile': DevicePhoneMobileIcon,
+    'ai': CpuChipIcon,
+    'design': PaintBrushIcon,
+    'other': BoltIcon
   }
-  return icons[category] || '📦'
+  return icons[category] || CubeIcon
 }
 
 // BENTO GRID LOGIC

@@ -96,8 +96,8 @@
                 leave-to-class="opacity-0 scale-50 -rotate-180"
                 mode="out-in"
               >
-                <span v-if="locale === 'fr'" key="fr" class="text-lg">🇫🇷</span>
-                <span v-else key="en" class="text-lg">🇬🇧</span>
+                <span v-if="locale === 'fr'" key="fr" class="font-bold font-mono">FR</span>
+                <span v-else key="en" class="font-bold font-mono">EN</span>
               </transition>
             </div>
           </button>
@@ -238,8 +238,8 @@
                 : 'text-gray-600 hover:bg-gray-100'"
             >
               <div class="flex items-center gap-3">
-                <span v-if="locale === 'fr'">🇫🇷</span>
-                <span v-else>🇬🇧</span>
+                <span v-if="locale === 'fr'" class="font-bold font-mono">FR</span>
+                <span v-else class="font-bold font-mono">EN</span>
                 {{ locale === 'fr' ? 'FRANÇAIS' : 'ENGLISH' }}
               </div>
               <span class="text-xs opacity-50">{{ locale === 'fr' ? 'FR' : 'EN' }}</span>
@@ -254,8 +254,8 @@
                 : 'text-gray-600 hover:bg-gray-100'"
             >
               <div class="flex items-center gap-3">
-                <span v-if="themeStore.darkMode" class="text-yellow-400">🌙</span>
-                <span v-else class="text-yellow-500">☀️</span>
+                <MoonIcon v-if="themeStore.darkMode" class="w-5 h-5 text-yellow-400" />
+                <SunIcon v-else class="w-5 h-5 text-yellow-500" />
                 {{ themeStore.darkMode ? (locale === 'fr' ? 'MODE CLAIR' : 'LIGHT MODE') : (locale === 'fr' ? 'MODE SOMBRE' : 'DARK MODE') }}
               </div>
               <span class="text-xs opacity-50">CTRL+T</span>
@@ -284,6 +284,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/language'
+import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
 const route = useRoute()

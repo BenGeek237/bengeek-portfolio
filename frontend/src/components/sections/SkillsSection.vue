@@ -42,7 +42,8 @@
                 class="text-2xl md:text-3xl mb-1.5 md:mb-2 transition-transform duration-300"
                 :class="{ 'group-hover:scale-110': !isDragging, 'scale-90': isDragging }"
               >
-                {{ skill.icon }}
+                <i v-if="typeof skill.icon === 'string'" :class="skill.icon" class="text-3xl"></i>
+                <component v-else :is="skill.icon" class="w-8 h-8 mx-auto text-primary-600 dark:text-primary-400" />
               </div>
               
               <!-- Nom -->
@@ -70,43 +71,52 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { 
+  CpuChipIcon, 
+  LockClosedIcon, 
+  WrenchScrewdriverIcon, 
+  GlobeAltIcon, 
+  PaintBrushIcon, 
+  FilmIcon, 
+  TableCellsIcon 
+} from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()
 
 const allSkills = [
   // Développement Web
-  { name: 'Django', icon: '🐍', level: 95 },
-  { name: 'Vue.js', icon: '⚡', level: 90 },
-  { name: 'React', icon: '⚛️', level: 80 },
-  { name: 'Python', icon: '🐍', level: 95 },
-  { name: 'Tailwind CSS', icon: '🎨', level: 95 },
-  { name: 'WordPress', icon: '📰', level: 90 },
+  { name: 'Django', icon: 'devicon-django-plain colored', level: 95 },
+  { name: 'Vue.js', icon: 'devicon-vuejs-plain colored', level: 90 },
+  { name: 'React', icon: 'devicon-react-original colored', level: 80 },
+  { name: 'Python', icon: 'devicon-python-plain colored', level: 95 },
+  { name: 'Tailwind CSS', icon: 'devicon-tailwindcss-original colored', level: 95 },
+  { name: 'WordPress', icon: 'devicon-wordpress-plain colored', level: 90 },
 
   // Mobile & Cross-platform
-  { name: 'Flutter', icon: '📱', level: 85 },
+  { name: 'Flutter', icon: 'devicon-flutter-plain colored', level: 85 },
 
   // Game Dev & IA
-  { name: 'Godot Engine', icon: '🎮', level: 85 },
-  { name: 'Pygame', icon: '👾', level: 90 },
-  { name: 'Intelligence Artificielle', icon: '🤖', level: 80 },
+  { name: 'Godot Engine', icon: 'devicon-godot-plain colored', level: 85 },
+  { name: 'Pygame', icon: 'devicon-python-plain colored', level: 90 },
+  { name: 'Intelligence Artificielle', icon: CpuChipIcon, level: 80 },
 
   // Cybersécurité & IT
-  { name: 'Cybersécurité', icon: '🔒', level: 85 },
-  { name: 'Google IT Support', icon: '💻', level: 90 },
-  { name: 'Linux', icon: '🐧', level: 85 },
-  { name: 'Réseaux', icon: '🌐', level: 80 },
+  { name: 'Cybersécurité', icon: LockClosedIcon, level: 85 },
+  { name: 'Google IT Support', icon: WrenchScrewdriverIcon, level: 90 },
+  { name: 'Linux', icon: 'devicon-linux-plain colored', level: 85 },
+  { name: 'Réseaux', icon: GlobeAltIcon, level: 80 },
 
   // Design & Création
-  { name: 'Google UX Design', icon: '✨', level: 85 },
-  { name: 'Figma', icon: '🖌️', level: 80 },
-  { name: 'Canva', icon: '🎨', level: 95 },
-  { name: 'CapCut', icon: '🎬', level: 90 },
+  { name: 'Google UX Design', icon: PaintBrushIcon, level: 85 },
+  { name: 'Figma', icon: 'devicon-figma-plain colored', level: 80 },
+  { name: 'Canva', icon: 'devicon-canva-original colored', level: 95 },
+  { name: 'CapCut', icon: FilmIcon, level: 90 },
 
   // Outils
-  { name: 'Suite Office', icon: '📊', level: 100 },
-  { name: 'Git & GitHub', icon: '🐙', level: 90 },
-  { name: 'Docker', icon: '🐳', level: 75 },
-  { name: 'VS Code', icon: '📝', level: 95 },
+  { name: 'Suite Office', icon: TableCellsIcon, level: 100 },
+  { name: 'Git & GitHub', icon: 'devicon-git-plain colored', level: 90 },
+  { name: 'Docker', icon: 'devicon-docker-plain colored', level: 75 },
+  { name: 'VS Code', icon: 'devicon-vscode-plain colored', level: 95 },
 ]
 
 // Drag to scroll avec momentum

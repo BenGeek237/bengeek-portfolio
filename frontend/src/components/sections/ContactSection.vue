@@ -18,7 +18,7 @@
           <div class="space-y-4">
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">✉️</span>
+                <EnvelopeIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">Email</h4>
@@ -38,7 +38,7 @@
 
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">📍</span>
+                <MapPinIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">{{ locale === 'fr' ? 'Localisation' : 'Location' }}</h4>
@@ -49,7 +49,7 @@
 
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">⏱️</span>
+                <ClockIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">{{ locale === 'fr' ? 'Disponibilité' : 'Availability' }}</h4>
@@ -154,7 +154,7 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
+import { PaperAirplaneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from '@heroicons/vue/24/outline'
 import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()

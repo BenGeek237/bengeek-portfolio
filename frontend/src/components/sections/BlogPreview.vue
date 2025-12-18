@@ -32,7 +32,7 @@
               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
             />
             <div v-else class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-              <span class="text-4xl">📝</span>
+              <PencilSquareIcon class="w-12 h-12 text-gray-500" />
             </div>
             
             <!-- Date et Catégorie sur l'image -->
@@ -63,8 +63,8 @@
             <!-- Stats et Bouton -->
             <div class="flex items-center justify-between mt-auto">
               <div class="flex items-center text-[9px] text-gray-500 font-mono">
-                <span class="mr-3">👁️ {{ post.views || 0 }}</span>
-                <span>⏱️ {{ timeAgo(post.published_date) }}</span>
+                <span class="mr-3 flex items-center"><EyeIcon class="w-3 h-3 mr-1" /> {{ post.views || 0 }}</span>
+                <span class="flex items-center"><ClockIcon class="w-3 h-3 mr-1" /> {{ timeAgo(post.published_date) }}</span>
               </div>
 
               <router-link 
@@ -83,7 +83,9 @@
           v-if="latestPosts.length === 0"
           class="md:col-span-3 card text-center py-8"
         >
-          <div class="text-4xl mb-3">📝</div>
+          <div class="mb-3 flex justify-center">
+            <PencilSquareIcon class="w-16 h-16 text-gray-300 dark:text-gray-600" />
+          </div>
           <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
             {{ locale === 'fr' ? 'Aucun article pour le moment' : 'No articles yet' }}
           </h3>
@@ -112,7 +114,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { blogService } from '@/services/api'
-import { ArrowRightIcon } from '@heroicons/vue/24/outline'
+import { ArrowRightIcon, PencilSquareIcon, EyeIcon, ClockIcon } from '@heroicons/vue/24/outline'
 import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()

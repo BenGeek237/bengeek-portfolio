@@ -127,7 +127,7 @@
           <router-link to="#projects"
             class="px-7 py-4 text-lg bg-gradient-to-r from-blue-600/80 to-green-500/80 text-white font-mono rounded-lg hover:shadow-lg hover:shadow-green-500/30 backdrop-blur-sm border border-green-500/20 transition-all duration-300 hover:scale-105">
             <span class="flex items-center justify-center">
-              <span class="mr-2">🚀</span>
+              <RocketLaunchIcon class="w-6 h-6 mr-2 animate-pulse" />
               {{ t('hero.exploreProjects') }}
             </span>
           </router-link>
@@ -135,7 +135,7 @@
           <a href="mailto:mamoudoubiya3@gmail.com"
             class="hire-me-btn px-7 py-4 text-lg font-mono rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 relative overflow-hidden group">
             <span class="flex items-center justify-center relative z-10 text-white">
-              <span class="mr-2">💼</span>
+              <BriefcaseIcon class="w-6 h-6 mr-2" />
               {{ t('hero.hireMe') }}
             </span>
             <!-- Gradient de fond animé -->
@@ -183,6 +183,7 @@
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import { useI18n } from 'vue-i18n'
+import { RocketLaunchIcon, BriefcaseIcon } from '@heroicons/vue/24/outline'
 
 const themeStore = useThemeStore()
 const { t, locale } = useI18n()

@@ -1,4 +1,4 @@
-# 🚀 Portfolio Moderne - Mamoudou Bia
+# Portfolio  - Mamoudou Bia
 
 [![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?logo=vue.js)](https://vuejs.org/)
 [![Django](https://img.shields.io/badge/Django-4.x-092E20?logo=django)](https://www.djangoproject.com/)

@@ -1,179 +1,73 @@
 <template>
-  <section class="pt-20 pb-12 md:pt-24 md:pb-16 relative overflow-hidden">
-    <!-- BACKGROUND GEEK ULTIMATE - Matrice + Circuit Board -->
-    <div class="absolute inset-0 z-0 overflow-hidden transition-colors duration-300"
-         :class="themeStore.darkMode ? 'bg-black' : 'bg-white'">
-      <!-- Couche 1: Circuit Board (base) -->
-      <div class="absolute inset-0 opacity-[0.15]">
-        <svg class="w-full h-full">
-          <defs>
-            <pattern id="circuitPattern" width="80" height="80" patternUnits="userSpaceOnUse">
-              <circle cx="40" cy="40" r="2" fill="#10b981" fill-opacity="0.5" />
-              <circle cx="40" cy="40" r="4" fill="none" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.3" />
-              <path d="M40,0 V80 M0,40 H80" stroke="#10b981" stroke-width="0.8" stroke-opacity="0.2" stroke-dasharray="4,4" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#circuitPattern)" />
-        </svg>
+  <section
+    id="hero"
+    class="relative flex flex-col items-center justify-center overflow-hidden"
+    style="height: 100vh;"
+  >
+    <!-- Fond dégradé sombre -->
+    <div class="absolute inset-0 z-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 dark:from-black dark:via-gray-950 dark:to-gray-900"></div>
+
+    <!-- Contenu centré -->
+    <div class="relative z-10 flex flex-col items-center text-center px-6" data-aos="fade-up">
+
+      <!-- Nom stylisé avec tirets -->
+      <h1 class="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-6 select-none">
+        -{{ locale === 'fr' ? 'Mamoudou Bia' : 'Mamoudou Bia' }}-
+      </h1>
+
+      <!-- Badge glassmorphism - titre -->
+      <div class="glass-badge mb-10">
+        <Transition name="role" mode="out-in">
+          <span :key="currentRole" class="text-base md:text-lg text-white/90 font-light tracking-wide">
+            {{ currentRole }}
+          </span>
+        </Transition>
       </div>
 
-      <!-- Couche 2: Code Matrix Falling (vert) -->
-      <div class="matrix-container absolute inset-0">
-        <div
-          v-for="i in matrixColumns"
-          :key="i.id"
-          class="matrix-column absolute top-0 font-mono text-green-400/40 text-sm md:text-base whitespace-nowrap"
-          :style="{
-            left: `${i.position}%`,
-            animationDuration: `${i.speed}s`,
-            animationDelay: `${i.delay}s`
-          }"
-          v-html="i.content"
-        />
+      <!-- Points verts de disponibilité -->
+      <div class="flex items-center gap-2 mb-10">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span class="text-sm text-white/70 font-light">
+          {{ locale === 'fr' ? 'Disponible pour de nouveaux projets' : 'Available for new projects' }}
+        </span>
       </div>
 
-      <!-- Couche 3: Points de connexion réseau -->
-      <div class="absolute inset-0">
-        <div
-          v-for="(node, idx) in networkNodes"
-          :key="idx"
-          class="network-node absolute rounded-full"
-          :class="[
-            node.size === 'sm' ? 'w-1.5 h-1.5' :
-            node.size === 'md' ? 'w-2.5 h-2.5' : 'w-1 h-1'
-          ]"
-          :style="{
-            left: `${node.x}%`,
-            top: `${node.y}%`,
-            backgroundColor: `rgba(16, 185, 129, ${node.opacity})`,
-            border: `1px solid rgba(59, 130, 246, ${node.opacity * 0.5})`,
-            animationDelay: `${idx * 0.2}s`
-          }"
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+        <button
+          @click="scrollTo('projects')"
+          class="px-7 py-3 bg-white text-gray-900 text-sm font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
         >
-          <div
-            v-if="node.size === 'md'"
-            class="absolute inset-0 rounded-full animate-ping"
-            :style="{ backgroundColor: `rgba(16, 185, 129, ${node.opacity * 0.3})` }"
-          />
+          {{ locale === 'fr' ? 'Voir mes projets' : 'View my projects' }}
+        </button>
+        <button
+          @click="scrollTo('contact')"
+          class="px-7 py-3 bg-transparent border border-white/50 text-white text-sm font-semibold rounded-full hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
+        >
+          {{ locale === 'fr' ? 'Me contacter' : 'Contact me' }}
+        </button>
+      </div>
+
+      <!-- Stats row -->
+      <div class="flex gap-10 mt-16 pt-8 border-t border-white/20" data-aos="fade-up" data-aos-delay="300">
+        <div v-for="stat in stats" :key="stat.label" class="flex flex-col items-center">
+          <span class="text-2xl font-bold text-white">{{ stat.value }}{{ stat.plus ? '+' : '' }}</span>
+          <span class="text-xs text-white/50 mt-0.5 font-light tracking-wide">{{ stat.label }}</span>
         </div>
       </div>
-
-      <!-- Couche 4: Lignes de connexion entre points -->
-      <svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#10b981" stop-opacity="0.5" />
-            <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.5" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-
-        <!-- Lignes principales (moins nombreuses) -->
-        <line
-          v-for="(line, idx) in connectionLines"
-          :key="`line-${idx}`"
-          :x1="`${line.x1}%`"
-          :y1="`${line.y1}%`"
-          :x2="`${line.x2}%`"
-          :y2="`${line.y2}%`"
-          stroke="url(#lineGradient)"
-          stroke-width="0.8"
-          stroke-dasharray="6,4"
-          filter="url(#glow)"
-          class="connection-line"
-          :style="{
-            animationDelay: `${idx * 0.5}s`
-          }"
-        />
-      </svg>
-
-      <!-- Couche 5: Effet de scanline très subtil -->
-      <div class="absolute inset-0 scanlines opacity-[0.03]"></div>
     </div>
 
-    <!-- CONTENU PRINCIPAL -->
-    <div class="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-      <div class="max-w-4xl mx-auto text-center">
-
-        <!-- Titre principal -->
-        <div class="mb-8" data-aos="fade-down" data-aos-delay="200">
-          <h1 class="hero-title font-bold px-2">
-            <span class="greeting-text text-gray-700 dark:text-gray-300 font-['Plus_Jakarta_Sans']">{{ t('hero.greeting') }}</span>
-            <br class="mobile-break" />
-            <span class="name-text text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 font-['Plus_Jakarta_Sans']">
-              {{ displayedName }}<span class="text-green-400">|</span>
-            </span>
-          </h1>
-        </div>
-
-        <!-- Rôles rotatifs avec animation slide premium -->
-        <div class="role-container text-xl md:text-2xl font-['Plus_Jakarta_Sans'] min-h-[50px] mt-4 mb-8 overflow-hidden relative inline-block">
-          <span class="text-green-400 mr-2">&gt;</span>
-          <div class="inline-block relative min-w-[300px] text-left">
-            <Transition name="slide-up" mode="out-in">
-              <span :key="currentRole" class="inline-block text-gray-600 dark:text-gray-300">{{ currentRole }}</span>
-            </Transition>
-          </div>
-        </div>
-
-        <!-- Boutons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12" data-aos="fade-up" data-aos-delay="600">
-          <router-link to="#projects"
-            class="px-7 py-4 text-lg bg-gradient-to-r from-blue-600/80 to-green-500/80 text-white font-mono rounded-lg hover:shadow-lg hover:shadow-green-500/30 backdrop-blur-sm border border-green-500/20 transition-all duration-300 hover:scale-105">
-            <span class="flex items-center justify-center">
-              <span class="mr-2">🚀</span>
-              {{ t('hero.exploreProjects') }}
-            </span>
-          </router-link>
-
-          <a href="mailto:mamoudoubiya3@gmail.com"
-            class="hire-me-btn px-7 py-4 text-lg font-mono rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 relative overflow-hidden group">
-            <span class="flex items-center justify-center relative z-10 text-white">
-              <span class="mr-2">💼</span>
-              {{ t('hero.hireMe') }}
-            </span>
-            <!-- Gradient de fond animé -->
-            <span class="absolute inset-0 bg-gradient-to-r from-blue-600 via-green-500 to-blue-600 bg-[length:200%_100%] animate-gradient"></span>
-            <!-- Bordure lumineuse tournante -->
-            <span class="absolute inset-0 rounded-lg opacity-75 blur-sm bg-gradient-to-r from-blue-400 via-green-400 to-blue-400 bg-[length:200%_100%] animate-gradient"></span>
-            <!-- Effet de glow externe -->
-            <span class="absolute -inset-1 rounded-lg opacity-30 blur-md bg-gradient-to-r from-blue-500 via-green-500 to-blue-500 bg-[length:200%_100%] animate-gradient -z-10"></span>
-            <!-- Particules brillantes au survol -->
-            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <span class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-sparkle"></span>
-              <span class="absolute top-3/4 left-2/3 w-1 h-1 bg-white rounded-full animate-sparkle" style="animation-delay: 0.2s"></span>
-              <span class="absolute top-1/2 left-3/4 w-1 h-1 bg-white rounded-full animate-sparkle" style="animation-delay: 0.4s"></span>
-            </span>
-          </a>
-        </div>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 max-w-2xl mx-auto mt-8">
-          <div v-for="stat in stats" :key="stat.label"
-               class="bg-gray-900/40 border border-gray-800/50 rounded-lg p-2 md:p-3 group hover:border-green-500/50 hover:bg-gray-900/60 backdrop-blur-sm transition-all duration-500">
-            <div class="text-2xl md:text-3xl font-mono font-bold text-green-400 mb-1 group-hover:scale-110 transition-transform duration-500">
-              {{ stat.value }}{{ stat.plus ? '+' : '' }}
-            </div>
-            <div class="text-xs md:text-sm text-gray-400 font-mono uppercase tracking-wider break-words">
-              {{ stat.label }}
-            </div>
-            <div class="h-0.5 w-0 bg-gradient-to-r from-green-500 to-blue-500 group-hover:w-full transition-all duration-700 mt-2"></div>
-          </div>
-        </div>
-
-        <!-- Scroll indicator -->
-        <div class="mt-12">
-          <div class="text-gray-500 text-base font-mono mb-2">{{ t('hero.scrollDown') }}</div>
-          <div class="w-6 h-10 border-2 border-gray-700 rounded-full mx-auto flex justify-center">
-            <div class="w-1 h-3 bg-green-400 rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
+    <!-- Scroll indicator -->
+    <div
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10 opacity-60 hover:opacity-100 transition-opacity"
+      @click="scrollTo('about')"
+    >
+      <span class="text-[10px] text-white/60 tracking-[0.2em] uppercase font-light">Scroll</span>
+      <div class="mouse-scroll">
+        <div class="mouse-wheel"></div>
       </div>
     </div>
   </section>
@@ -181,420 +75,113 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
-import { useThemeStore } from '@/stores/theme'
 import { useI18n } from 'vue-i18n'
 
-const themeStore = useThemeStore()
 const { t, locale } = useI18n()
 
-// Animation typing
-const fullName = 'MAMOUDOU BIA'
-const displayedName = ref('')
-
-// Rôles rotatifs avec traductions
 const roles = computed(() => [
+  t('hero.roles.fullstack'),
   t('hero.roles.webMobile'),
   t('hero.roles.game'),
   t('hero.roles.uiux'),
-  t('hero.roles.itSecurity'),
-  t('hero.roles.ai'),
-  t('hero.roles.fullstack')
 ])
+
 const currentRole = ref('')
 let roleIndex = 0
 let roleInterval = null
 
-// Stats avec traductions - Données réelles et pertinentes
 const stats = computed(() => [
-  { value: '2', label: t('hero.stats.experience'), plus: true },
-  { value: '15', label: t('hero.stats.technologies'), plus: true },
-  { value: '10', label: t('hero.stats.projects'), plus: true },
-  { value: '✓', label: t('hero.stats.availability'), plus: false },
+  { value: '2',   label: t('hero.stats.experience'), plus: true },
+  { value: '15',  label: t('hero.stats.technologies'), plus: true },
+  { value: '10',  label: t('hero.stats.projects'), plus: true },
 ])
 
-// ===== BACKGROUND GEEK =====
-// Colonnes de code Matrix
-const matrixColumns = ref([])
-
-// Points de réseau
-const networkNodes = ref([])
-
-// Lignes de connexion
-const connectionLines = ref([])
-
-// Générer une colonne de code Matrix
-const generateMatrixColumn = () => {
-  const chars = '01アイウエオカキクケコABCDEF0123456789<>{}[]()'
-  let column = ''
-  const length = 15 + Math.floor(Math.random() * 10)
-
-  for (let i = 0; i < length; i++) {
-    const char = chars[Math.floor(Math.random() * chars.length)]
-    // Alterner opacité pour effet dégradé
-    const opacity = 0.2 + (i / length) * 0.6
-    column += `<span style="opacity: ${opacity}">${char}</span>`
-  }
-  return column
-}
-
-// Initialiser le background geek
-const initGeekBackground = () => {
-  // Générer 25 colonnes Matrix
-  matrixColumns.value = Array.from({ length: 25 }, (_, i) => ({
-    id: i,
-    position: (i * 4), // Espacement régulier
-    speed: 10 + Math.random() * 15, // Vitesse variable
-    delay: Math.random() * 10, // Décalage aléatoire
-    content: generateMatrixColumn()
-  }))
-
-  // Générer 40 points de réseau
-  networkNodes.value = Array.from({ length: 40 }, (_, i) => ({
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: i % 5 === 0 ? 'md' : i % 3 === 0 ? 'sm' : 'xs',
-    opacity: 0.2 + Math.random() * 0.4
-  }))
-
-  // Générer 15 lignes de connexion
-  connectionLines.value = Array.from({ length: 15 }, (_, i) => {
-    const x1 = Math.random() * 100
-    const y1 = Math.random() * 100
-    return {
-      x1,
-      y1,
-      x2: Math.min(100, Math.max(0, x1 + (Math.random() * 40 - 20))),
-      y2: Math.min(100, Math.max(0, y1 + (Math.random() * 40 - 20)))
-    }
-  })
-}
-
-
-// Rotation simple des rôles avec animation slide
 const rotateRoles = () => {
   roleInterval = setInterval(() => {
     roleIndex = (roleIndex + 1) % roles.value.length
     currentRole.value = roles.value[roleIndex]
-  }, 3000) // Change tous les 3 secondes
+  }, 3000)
 }
 
-// Watcher pour réinitialiser l'animation des rôles quand la langue change
 watch(locale, () => {
-  // Arrêter l'animation en cours
-  if (roleInterval) {
-    clearInterval(roleInterval)
-  }
-  // Réinitialiser et redémarrer
+  clearInterval(roleInterval)
   roleIndex = 0
   currentRole.value = roles.value[0]
   rotateRoles()
 })
 
-// Animation typing
+const scrollTo = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    const offset = 64
+    const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
 onMounted(() => {
-  // Initialiser le background
-  initGeekBackground()
-
-  // Animation du nom
-  let index = 0
-  const typingInterval = setInterval(() => {
-    if (index < fullName.length) {
-      displayedName.value += fullName[index]
-      index++
-    } else {
-      clearInterval(typingInterval)
-    }
-  }, 150)
-
-  // Démarrer l'animation des rôles après celle du nom  
-  setTimeout(() => {
-    currentRole.value = roles.value[0]
-    rotateRoles()
-  }, 2000)
+  currentRole.value = roles.value[0]
+  setTimeout(rotateRoles, 3000)
 })
 
 onUnmounted(() => {
-  // Nettoyage si nécessaire
+  clearInterval(roleInterval)
 })
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<style scoped>
+/* Police décorative pour le nom — on utilise une Google Font serif cursive */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 
-/* Curseur clignotant */
-.text-green-400:last-child {
-  animation: blink 1s infinite;
+.hero-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+  line-height: 1.1;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+/* Badge glassmorphism */
+.glass-badge {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 12px 32px;
+  min-width: 260px;
+  text-align: center;
 }
 
-/* Animation de gradient pour le bouton Hire Me */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* Icône souris scroll */
+.mouse-scroll {
+  width: 22px;
+  height: 34px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
 }
 
-.animate-gradient {
-  animation: gradient 3s ease infinite;
+.mouse-wheel {
+  width: 3px;
+  height: 6px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 9999px;
+  animation: scrollWheel 1.5s ease infinite;
 }
 
-/* Animation de particules scintillantes */
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
+@keyframes scrollWheel {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
 }
 
-.animate-sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
+/* Transitions des rôles */
+.role-enter-active, .role-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
-
-/* ===== ANIMATION SLIDE-UP PREMIUM POUR LES RÔLES ===== */
-
-/* Transition slide-up : sortie */
-.slide-up-leave-active {
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  position: absolute;
-}
-
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(-30px) scale(0.9);
-  filter: blur(4px);
-}
-
-/* Transition slide-up : entrée */
-.slide-up-enter-active {
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.slide-up-enter-from {
-  opacity: 0;
-  transform: translateY(30px) scale(0.9);
-  filter: blur(4px);
-}
-
-.slide-up-enter-to {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-
-/* Effet de glow sur les rôles */
-.slide-up-enter-active span,
-.slide-up-leave-active span {
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-  transition: text-shadow 0.3s ease;
-}
-
-/* Conteneur des rôles - style épuré sans cadre */
-.role-container {
-  transition: all 0.3s ease;
-}
-
-
-
-
-/* Style du bouton Hire Me */
-.hire-me-btn {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-  transition: all 0.3s ease;
-}
-
-.hire-me-btn:hover {
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(59, 130, 246, 0.3);
-}
-
-/* ===== ANIMATIONS BACKGROUND GEEK ===== */
-
-/* Chute des colonnes Matrix */
-@keyframes matrixFall {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  10% { opacity: 0.5; }
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
-
-.matrix-column {
-  animation: matrixFall linear infinite;
-  line-height: 1.8;
-}
-
-/* Pulsation des points réseau */
-@keyframes nodePulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.6;
-  }
-}
-
-.network-node {
-  animation: nodePulse 3s ease-in-out infinite;
-}
-
-/* Animation des lignes de connexion */
-@keyframes lineFlow {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 20; }
-}
-
-.connection-line {
-  stroke-dasharray: 10, 5;
-  animation: lineFlow 3s linear infinite;
-}
-
-/* Effet scanlines */
-.scanlines {
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 255, 0, 0.03) 51%
-  );
-  background-size: 100% 8px;
-}
-
-/* Assombrir légèrement le background pour mieux voir le texte */
-.bg-black {
-  background: linear-gradient(to bottom, #000000 0%, #0a0a0a 100%);
-}
-
-/* Animation fade pour les rôles */
-.font-share-tech span {
-  transition: opacity 0.5s ease-in-out;
-}
-
-/* Garantir une ligne sur tous les écrans */
-.whitespace-nowrap {
-  white-space: nowrap;
-}
-
-/* ===== HERO TITLE RESPONSIVE ===== */
-
-/* Base styles pour le titre */
-.hero-title {
-  font-size: 2rem; /* 32px base */
-  line-height: 1.2;
-}
-
-.greeting-text {
-  display: inline;
-}
-
-.name-text {
-  display: inline;
-  white-space: nowrap;
-}
-
-/* Mobile break - caché par défaut, visible uniquement sur mobile */
-.mobile-break {
-  display: none; /* CACHÉ PAR DÉFAUT */
-}
-
-/* Mobile (très petits écrans) */
-@media (max-width: 374px) {
-  .hero-title {
-    font-size: 1.5rem !important; /* 24px */
-  }
-  
-  .mobile-break {
-    display: block !important; /* Saut de ligne sur très petit mobile */
-  }
-}
-
-/* Mobile standard */
-@media (max-width: 640px) {
-  .hero-title {
-    font-size: 1.875rem; /* 30px */
-    line-height: 1.3;
-  }
-  
-  .mobile-break {
-    display: block !important; /* Saut de ligne sur mobile */
-  }
-
-  /* Réduire le nombre de colonnes Matrix sur mobile */
-  .matrix-column {
-    font-size: 0.7rem !important;
-  }
-}
-
-/* Tablettes - UNE SEULE LIGNE */
-@media (min-width: 641px) and (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem; /* 32px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop petit - UNE SEULE LIGNE */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .hero-title {
-    font-size: 2.5rem; /* 40px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop moyen - UNE SEULE LIGNE */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .hero-title {
-    font-size: 3rem; /* 48px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Desktop large - UNE SEULE LIGNE */
-@media (min-width: 1280px) and (max-width: 1535px) {
-  .hero-title {
-    font-size: 3.5rem; /* 56px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
-/* Extra large screens - UNE SEULE LIGNE */
-@media (min-width: 1536px) {
-  .hero-title {
-    font-size: 4rem; /* 64px - RÉDUIT */
-  }
-  
-  .mobile-break {
-    display: none !important; /* PAS de saut de ligne */
-  }
-}
-
+.role-enter-from { opacity: 0; transform: translateY(8px); }
+.role-leave-to   { opacity: 0; transform: translateY(-8px); }
 </style>

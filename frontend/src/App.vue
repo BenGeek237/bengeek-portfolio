@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
     <Navbar />
-    <main class="flex-grow relative overflow-hidden">
+    <main class="flex-grow relative">
       <router-view v-slot="{ Component, route }">
         <transition 
           :name="getTransitionName(route)"

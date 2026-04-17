@@ -18,7 +18,7 @@
           <div class="space-y-4">
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">✉️</span>
+                <EnvelopeIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">Email</h4>
@@ -38,7 +38,7 @@
 
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">📍</span>
+                <MapPinIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">{{ locale === 'fr' ? 'Localisation' : 'Location' }}</h4>
@@ -49,7 +49,7 @@
 
             <div class="flex items-start">
               <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-primary-600 dark:text-primary-400 text-lg">⏱️</span>
+                <ClockIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
               <div>
                 <h4 class="font-semibold text-gray-900 dark:text-white text-sm">{{ locale === 'fr' ? 'Disponibilité' : 'Availability' }}</h4>
@@ -154,7 +154,7 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
+import { PaperAirplaneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from '@heroicons/vue/24/outline'
 import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()
@@ -213,27 +213,27 @@ const submitForm = async () => {
   // 4. Allez dans Account -> Copiez la Public Key
   // 5. Ajoutez ces valeurs dans le fichier .env
   
-  const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
-  const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+  const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+  const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  
+  // Debug pour vérifier si les clés sont là
+  console.log('Tentative d\'envoi avec Service ID:', serviceID ? 'OK ' + serviceID.substring(0, 4) + '...' : 'MANQUANT')
   
   const templateParams = {
     from_name: form.name,
     from_email: form.email,
     subject: form.subject,
     message: form.message,
-    to_name: 'BenGeek', // Votre nom
+    to_name: 'BenGeek',
   }
   
   try {
-    if (serviceID === 'YOUR_SERVICE_ID') {
-      // Simulation si pas encore configuré
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      console.warn('EmailJS non configuré : simulation réussie')
-    } else {
-      // Envoi réel
-      await emailjs.send(serviceID, templateID, templateParams, publicKey)
+    if (!serviceID || !templateID || !publicKey) {
+      throw new Error('Configuration EmailJS manquante. Vérifiez les variables d\'environnement.')
     }
+
+    await emailjs.send(serviceID, templateID, templateParams, publicKey)
     
     status.type = 'success'
     status.message = 'Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.'
@@ -247,7 +247,10 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Erreur EmailJS:', error)
     status.type = 'error'
-    status.message = 'Une erreur est survenue lors de l\'envoi. Vérifiez vos clés API ou réessayez plus tard.'
+    // Afficher un message plus clair selon l'erreur
+    status.message = serviceID 
+      ? 'Erreur lors de l\'envoi. Vérifiez la console (F12) pour plus de détails.' 
+      : 'Erreur de configuration : Clés EmailJS introuvables.'
   } finally {
     loading.value = false
     

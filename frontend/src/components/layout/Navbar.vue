@@ -8,9 +8,12 @@
 
         <!-- Logo -->
         <router-link to="/" class="flex items-center gap-2.5 group">
-          <div class="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center flex-shrink-0">
-            <span class="text-white dark:text-gray-900 font-bold text-sm">M</span>
-          </div>
+          <img
+            src="/logo/bg.png"
+            alt="BenGeek Logo"
+            class="w-9 h-9 rounded-lg object-contain"
+            :class="themeStore.darkMode ? 'bg-white/10' : 'bg-gray-100'"
+          />
           <div class="flex flex-col leading-none">
             <span class="text-sm font-semibold text-gray-900 dark:text-white">Mamoudou Bia</span>
             <span class="text-[11px] text-gray-400 dark:text-gray-500 font-normal">Fullstack Developer</span>

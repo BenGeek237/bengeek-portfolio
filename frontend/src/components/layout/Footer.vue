@@ -4,11 +4,9 @@
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
         <!-- Logo -->
         <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-sm">{ }</span>
-          </div>
-          <span class="text-lg font-geek font-bold text-white tracking-tight">
-            <span class="text-primary-400">BEN</span><span class="text-gray-300">GEEK</span>
+          <img src="/logo/bg.png" alt="BenGeek Logo" class="w-9 h-9 rounded-lg object-contain bg-gray-800" />
+          <span class="text-lg font-bold text-white tracking-tight">
+            <span class="text-emerald-400">BEN</span><span class="text-gray-300">GEEK</span>
           </span>
         </div>
         

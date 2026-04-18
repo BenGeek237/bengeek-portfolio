@@ -12,7 +12,10 @@
 
       <!-- Nom stylisé avec tirets -->
       <h1 class="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-6 select-none">
-        -{{ locale === 'fr' ? 'Mamoudou Bia' : 'Mamoudou Bia' }}-
+        <span class="block text-2xl sm:text-3xl md:text-4xl font-light tracking-widest text-white/70 mb-2">
+          {{ locale === 'fr' ? 'Salut, je suis' : "Hi, I'm" }}
+        </span>
+        -Mamoudou Bia-
       </h1>
 
       <!-- Badge glassmorphism - titre -->

@@ -135,16 +135,15 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Police décorative pour le nom — on utilise une Google Font serif cursive */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+/* Nom hero — Inter Black ultra-condensé */
 
 .hero-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   text-shadow: 0 2px 30px rgba(0,0,0,0.5);
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 /* Badge glassmorphism */

@@ -1,5 +1,5 @@
 /* Imports — Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -48,14 +48,14 @@
     @apply text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight;
   }
 
-  /* Titre stylisé façon Nicolas Wadoux : -Titre- en Playfair Display italic */
+  /* Titre stylisé — Inter Black, très serré */
   .section-styled-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
     font-size: clamp(2rem, 5vw, 3rem);
     @apply text-gray-900 dark:text-white mb-2 leading-tight;
-    letter-spacing: 0.01em;
+    letter-spacing: -0.03em;
   }
 
   .section-subtitle {

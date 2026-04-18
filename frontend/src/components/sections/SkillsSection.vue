@@ -19,7 +19,7 @@
               ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 border-gray-900 dark:border-white shadow-md'
               : 'bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600'"
           >
-            <span class="mr-2">{{ cat.emoji }}</span>{{ cat.label }}
+            <component :is="cat.iconComponent" class="w-4 h-4 mr-2 inline-block -mt-0.5" />{{ cat.label }}
           </button>
         </div>
 
@@ -34,9 +34,9 @@
               :data-aos-delay="i * 40"
             >
               <!-- Icône -->
-              <div class="text-3xl leading-none group-hover:scale-110 transition-transform duration-200">
-                <i v-if="typeof skill.icon === 'string'" :class="skill.icon"></i>
-                <span v-else>{{ skill.emoji }}</span>
+              <div class="text-3xl leading-none group-hover:scale-110 transition-transform duration-200 flex justify-center items-center h-8">
+                <i v-if="skill.icon" :class="skill.icon"></i>
+                <component v-else-if="skill.iconHero" :is="skill.iconHero" class="w-8 h-8 text-gray-700 dark:text-gray-300" />
               </div>
               <!-- Nom -->
               <span class="text-[11px] font-medium text-gray-600 dark:text-gray-400 text-center leading-tight">
@@ -54,15 +54,19 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { 
+  GlobeAltIcon, DevicePhoneMobileIcon, CogIcon, WrenchScrewdriverIcon, 
+  PaintBrushIcon, ServerStackIcon, ShieldCheckIcon, SignalIcon, RectangleGroupIcon 
+} from '@heroicons/vue/24/outline'
 
 const { locale } = useI18n()
 const activeCategory = ref('web')
 
 const categories = computed(() => [
-  { id: 'web',     label: 'Web',        emoji: '🌐' },
-  { id: 'mobile',  label: 'Mobile',     emoji: '📱' },
-  { id: 'backend', label: 'Backend',    emoji: '⚙️' },
-  { id: 'autres',  label: locale.value === 'fr' ? 'Autres' : 'Others', emoji: '🛠️' },
+  { id: 'web',     label: 'Web',        iconComponent: GlobeAltIcon },
+  { id: 'mobile',  label: 'Mobile',     iconComponent: DevicePhoneMobileIcon },
+  { id: 'backend', label: 'Backend',    iconComponent: CogIcon },
+  { id: 'autres',  label: locale.value === 'fr' ? 'Autres' : 'Others', iconComponent: WrenchScrewdriverIcon },
 ])
 
 const skillsByCategory = {
@@ -88,7 +92,7 @@ const skillsByCategory = {
     { name: 'Python',        icon: 'devicon-python-plain colored' },
     { name: 'PostgreSQL',    icon: 'devicon-postgresql-plain colored' },
     { name: 'SQLite',        icon: 'devicon-sqldeveloper-plain colored' },
-    { name: 'REST API',      emoji: '🔌', icon: false },
+    { name: 'REST API',      iconHero: ServerStackIcon },
     { name: 'Git',           icon: 'devicon-git-plain colored' },
     { name: 'Docker',        icon: 'devicon-docker-plain colored' },
     { name: 'Linux',         icon: 'devicon-linux-plain colored' },
@@ -98,11 +102,11 @@ const skillsByCategory = {
     { name: 'Photoshop',     icon: 'devicon-photoshop-plain colored' },
     { name: 'Illustrator',   icon: 'devicon-illustrator-plain colored' },
     { name: 'Canva',         icon: 'devicon-canva-original colored' },
-    { name: 'UX/UI Design',  emoji: '🎨', icon: false },
-    { name: 'IT Support',    emoji: '🔧', icon: false },
-    { name: 'Réseaux',       emoji: '📡', icon: false },
-    { name: 'Sys. Info (SI)',emoji: '🗄️', icon: false },
-    { name: 'Cybersécurité', emoji: '🔒', icon: false },
+    { name: 'UX/UI Design',  iconHero: PaintBrushIcon },
+    { name: 'IT Support',    iconHero: WrenchScrewdriverIcon },
+    { name: 'Réseaux',       iconHero: SignalIcon },
+    { name: 'Sys. Info (SI)',iconHero: RectangleGroupIcon },
+    { name: 'Cybersécurité', iconHero: ShieldCheckIcon },
   ],
 }
 

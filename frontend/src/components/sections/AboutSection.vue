@@ -84,9 +84,9 @@
                   <a v-for="(cert, index) in certificationsList" :key="index"
                     :href="cert.file" target="_blank"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-sm text-gray-700 dark:text-gray-300 shadow-sm hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors group cursor-pointer">
-                    <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <CheckBadgeIcon class="w-5 h-5 text-emerald-500 flex-shrink-0" />
                     <span class="font-medium flex-grow">{{ cert.name }}</span>
-                    <svg class="w-4 h-4 text-gray-400 group-hover:text-emerald-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <ArrowTopRightOnSquareIcon class="w-4 h-4 text-gray-400 group-hover:text-emerald-500 transition-colors" />
                   </a>
                 </div>
 
@@ -94,7 +94,7 @@
                 <div v-else-if="activeTab === 'hobbies'" class="flex flex-wrap gap-2">
                   <span v-for="hobby in hobbies" :key="hobby.name"
                     class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-600 dark:text-gray-400">
-                    <span>{{ hobby.emoji }}</span>
+                    <component :is="hobby.iconComponent" class="w-4 h-4 text-emerald-500" />
                     {{ hobby.name }}
                   </span>
                 </div>
@@ -105,11 +105,7 @@
           <!-- Section Formation (Restored) -->
           <div class="mt-8 mb-6 bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-start gap-4">
             <div class="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v6"></path>
-              </svg>
+              <AcademicCapIcon class="w-6 h-6" />
             </div>
             <div>
               <h4 class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">{{ $t('about.education.title') }}</h4>
@@ -128,9 +124,7 @@
             download="Mamoudou_Bia_CV.pdf"
             class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 border border-gray-900 dark:border-white text-gray-900 dark:text-white text-sm font-semibold rounded-full hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all duration-200"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+            <DocumentArrowDownIcon class="w-4 h-4" />
             {{ locale === 'fr' ? 'Télécharger mon CV' : 'Download my CV' }}
           </a>
         </div>
@@ -143,6 +137,18 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { 
+  AcademicCapIcon, 
+  CheckBadgeIcon, 
+  ArrowTopRightOnSquareIcon, 
+  DocumentArrowDownIcon, 
+  PuzzlePieceIcon, 
+  BookOpenIcon, 
+  MusicalNoteIcon, 
+  TrophyIcon, 
+  GlobeAltIcon, 
+  CpuChipIcon 
+} from '@heroicons/vue/24/outline'
 
 const { locale } = useI18n()
 
@@ -189,20 +195,20 @@ const certificationsList = computed(() => [
 
 const hobbies = computed(() => locale.value === 'fr'
   ? [
-      { emoji: '🎮', name: 'Développement de jeux' },
-      { emoji: '📚', name: 'Lecture tech' },
-      { emoji: '🎵', name: 'Musique' },
-      { emoji: '⚽', name: 'Football' },
-      { emoji: '🌍', name: 'Geopolitique' },
-      { emoji: '🤖', name: 'IA & ML' },
+      { iconComponent: PuzzlePieceIcon, name: 'Développement de jeux' },
+      { iconComponent: BookOpenIcon, name: 'Lecture tech' },
+      { iconComponent: MusicalNoteIcon, name: 'Musique' },
+      { iconComponent: TrophyIcon, name: 'Football' },
+      { iconComponent: GlobeAltIcon, name: 'Geopolitique' },
+      { iconComponent: CpuChipIcon, name: 'IA & ML' },
     ]
   : [
-      { emoji: '🎮', name: 'Game dev' },
-      { emoji: '📚', name: 'Tech reading' },
-      { emoji: '🎵', name: 'Music' },
-      { emoji: '⚽', name: 'Football' },
-      { emoji: '🌍', name: 'Geopolitics' },
-      { emoji: '🤖', name: 'AI & ML' },
+      { iconComponent: PuzzlePieceIcon, name: 'Game dev' },
+      { iconComponent: BookOpenIcon, name: 'Tech reading' },
+      { iconComponent: MusicalNoteIcon, name: 'Music' },
+      { iconComponent: TrophyIcon, name: 'Football' },
+      { iconComponent: GlobeAltIcon, name: 'Geopolitics' },
+      { iconComponent: CpuChipIcon, name: 'AI & ML' },
     ])
 </script>
 

@@ -81,11 +81,13 @@
 
                 <!-- Certifications -->
                 <div v-else-if="activeTab === 'certifications'" class="flex flex-col gap-3">
-                  <div v-for="(cert, index) in $tm('about.certifications.items')" :key="index"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-sm text-gray-700 dark:text-gray-300 shadow-sm">
+                  <a v-for="(cert, index) in certificationsList" :key="index"
+                    :href="cert.file" target="_blank"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-sm text-gray-700 dark:text-gray-300 shadow-sm hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors group cursor-pointer">
                     <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span class="font-medium">{{ $rt(cert) }}</span>
-                  </div>
+                    <span class="font-medium flex-grow">{{ cert.name }}</span>
+                    <svg class="w-4 h-4 text-gray-400 group-hover:text-emerald-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </a>
                 </div>
 
                 <!-- Loisirs -->
@@ -173,6 +175,17 @@ const languages = [
 const softSkills = computed(() => locale.value === 'fr'
   ? ['Autonomie', 'Rigueur', 'Créativité', 'Travail en équipe', 'Adaptabilité', 'Communication', 'Curiosité', 'Résolution de problèmes']
   : ['Autonomy', 'Rigor', 'Creativity', 'Teamwork', 'Adaptability', 'Communication', 'Curiosity', 'Problem solving'])
+
+const certificationsList = computed(() => [
+  { name: 'Introduction to Back-End Development', file: '/certifications/Certificat Introduction to backend.pdf' },
+  { name: 'Introduction to Front-End Development', file: '/certifications/Certificat Introduction to frontend.pdf' },
+  { name: 'Programming in Python (Coursera)', file: '/certifications/Coursera python VV742X8SGV4P.pdf' },
+  { name: 'Django Web Framework (Coursera)', file: '/certifications/Coursera Django 00FK52IFSUVK.pdf' },
+  { name: 'Version Control (Coursera)', file: '/certifications/Coursera FRCXJJNKWB70.pdf' },
+  { name: 'Databases for Back-End (Coursera)', file: '/certifications/Coursera H5KWTX2W5D1M.pdf' },
+  { name: 'APIs (Coursera)', file: '/certifications/Coursera LBWKCW614D4T.pdf' },
+  { name: 'The Full Stack (Coursera)', file: '/certifications/Coursera LBWKCW614D4T_2.pdf' },
+])
 
 const hobbies = computed(() => locale.value === 'fr'
   ? [

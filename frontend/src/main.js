@@ -23,3 +23,7 @@ AOS.init({
     easing: 'slide',
     once: true,
 })
+
+// Vercel Web Analytics
+import { inject } from '@vercel/analytics';
+inject();

@@ -95,13 +95,14 @@ const skillsByCategory = {
   ],
   autres: [
     { name: 'VS Code',       icon: 'devicon-vscode-plain colored' },
+    { name: 'Photoshop',     icon: 'devicon-photoshop-plain colored' },
+    { name: 'Illustrator',   icon: 'devicon-illustrator-plain colored' },
     { name: 'Canva',         icon: 'devicon-canva-original colored' },
-    { name: 'Suite Office',  emoji: '📊', icon: false },
-    { name: 'UX Design',     emoji: '🎨', icon: false },
-    { name: 'IA / ML',       emoji: '🤖', icon: false },
-    { name: 'Cybersécurité', emoji: '🔒', icon: false },
+    { name: 'UX/UI Design',  emoji: '🎨', icon: false },
     { name: 'IT Support',    emoji: '🔧', icon: false },
     { name: 'Réseaux',       emoji: '📡', icon: false },
+    { name: 'Sys. Info (SI)',emoji: '🗄️', icon: false },
+    { name: 'Cybersécurité', emoji: '🔒', icon: false },
   ],
 }
 

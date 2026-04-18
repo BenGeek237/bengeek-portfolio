@@ -156,12 +156,12 @@ const tabs = computed(() => [
 ])
 
 const introText = computed(() => locale.value === 'fr'
-  ? 'Je suis <strong>Mamoudou Bia</strong>, développeur Fullstack passionné par la création d\'applications web et mobile robustes. Je maîtrise l\'ensemble de la chaîne de développement, de la conception à la mise en production.'
-  : 'I\'m <strong>Mamoudou Bia</strong>, a Fullstack developer passionate about building robust web and mobile applications. I master the entire development chain, from design to deployment.')
+  ? 'Je suis <strong>Mamoudou Bia</strong>, véritable couteau suisse du numérique. Si j\'excelle en tant que développeur Fullstack, mon expertise couvre bien d\'autres domaines : <strong>Infographie</strong>, <strong>Support IT</strong>, et conception de <strong>Systèmes d\'Information (SI)</strong> complexes.'
+  : 'I\'m <strong>Mamoudou Bia</strong>, a true digital Swiss Army knife. While I excel as a Fullstack developer, my expertise covers many other areas: <strong>Infography</strong>, <strong>IT Support</strong>, and designing complex <strong>Information Systems (IS)</strong>.')
 
 const approachText = computed(() => locale.value === 'fr'
-  ? 'Mon approche : comprendre le problème métier avant d\'écrire la première ligne de code. Que ce soit avec Django, Vue.js, Flutter ou Godot, je m\'adapte aux besoins du projet avec rigueur et créativité.'
-  : 'My approach: understand the business problem before writing the first line of code. Whether with Django, Vue.js, Flutter or Godot, I adapt to project needs with rigor and creativity.')
+  ? 'Mon approche : être polyvalent pour résoudre tout problème informatique. Qu\'il s\'agisse de coder une application avec Django ou Vue.js, de concevoir une identité visuelle percutante, ou de gérer une infrastructure IT, j\'aborde chaque projet avec rigueur et créativité globale.'
+  : 'My approach: be versatile to solve any IT problem. Whether it\'s coding an application with Django or Vue.js, designing a striking visual identity, or managing an IT infrastructure, I approach each project with global rigor and creativity.')
 
 const languages = [
   { name: 'Python',      icon: 'devicon-python-plain colored' },

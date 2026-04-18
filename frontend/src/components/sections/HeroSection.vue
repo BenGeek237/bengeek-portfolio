@@ -81,9 +81,11 @@ const { t, locale } = useI18n()
 
 const roles = computed(() => [
   t('hero.roles.fullstack'),
+  locale.value === 'fr' ? 'Infographiste & Designer' : 'Graphic Designer',
+  locale.value === 'fr' ? 'Expert en Systèmes d\'Information (SI)' : 'Information Systems (IS) Expert',
+  t('hero.roles.itSecurity'),
   t('hero.roles.webMobile'),
   t('hero.roles.game'),
-  t('hero.roles.uiux'),
 ])
 
 const currentRole = ref('')

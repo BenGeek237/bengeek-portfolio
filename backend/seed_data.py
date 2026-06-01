@@ -85,6 +85,7 @@ L'application est découpée de manière très stricte en couches logicielles :
             'short_description': 'Catalogue interactif moderne et boutique de motifs de broderie avec recherche dynamique, administration via Netlify CMS et prise de commande instantanée via WhatsApp.',
             'category': 'web',
             'technologies': 'HTML5, Tailwind CSS, Vanilla JavaScript (ES6+), Netlify CMS, Netlify Identity, Python Scripting, JSON',
+            'image': 'projects/mon_site.PNG',
             'github_url': 'https://github.com/BenGeek237/motif-237',
             'featured': True
         }

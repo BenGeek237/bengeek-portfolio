@@ -88,6 +88,8 @@ const skillsByCategory = {
     { name: 'Android',       icon: 'devicon-android-plain colored' },
   ],
   backend: [
+    { name: 'Java',          icon: 'devicon-java-plain colored' },
+    { name: 'Spring Boot',   icon: 'devicon-spring-original colored' },
     { name: 'Django',        icon: 'devicon-django-plain colored' },
     { name: 'Python',        icon: 'devicon-python-plain colored' },
     { name: 'PostgreSQL',    icon: 'devicon-postgresql-plain colored' },

@@ -170,6 +170,7 @@ const approachText = computed(() => locale.value === 'fr'
   : 'My approach: be versatile to solve any IT problem. Whether it\'s coding an application with Django or Vue.js, designing a striking visual identity, or managing an IT infrastructure, I approach each project with global rigor and creativity.')
 
 const languages = [
+  { name: 'Java',        icon: 'devicon-java-plain colored' },
   { name: 'Python',      icon: 'devicon-python-plain colored' },
   { name: 'JavaScript',  icon: 'devicon-javascript-plain colored' },
   { name: 'Dart',        icon: 'devicon-dart-plain colored' },

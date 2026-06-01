@@ -66,6 +66,34 @@ L'application est découpée de manière très stricte en couches logicielles :
     else:
         print(f"Projet '{project.title}' mis à jour.")
 
+    # 3.1. Création du projet "Motif 237"
+    motif_desc_fr = """### 🎯 À propos du projet
+**Motif 237** (Broderie Numérique) est une plateforme vitrine et un catalogue interactif moderne conçu pour une entreprise de création et vente de motifs de broderie personnalisés basée à Yaoundé, Cameroun. Le projet est optimisé pour maximiser le taux de conversion et offrir une navigation fluide et intuitive.
+
+### ⚡ Fonctionnalités clés et Expérience Utilisateur
+*   **Catalogue Interactif avec Filtres Dynamiques** : Chargement asynchrone des motifs à partir de bases de données JSON, avec recherche en temps réel et filtrage instantané par catégorie (*Homme, Femme, Gandoura, Enfant, Logo, Autres*).
+*   **Intégration WhatsApp Web (Optimisation Taux de Conversion)** : Système d'achat intuitif en un clic. Chaque fiche produit génère dynamiquement un lien WhatsApp personnalisé avec un message pré-rempli contenant les détails exacts du motif commandé.
+*   **Fiches Produits & Recommandations** : Module de fiches détaillées présentant les caractéristiques techniques du motif avec un moteur de suggestion de motifs similaires de la même catégorie.
+*   **Administration de Contenu (Netlify CMS / Decap CMS)** : Intégration de Netlify CMS avec authentification sécurisée via Netlify Identity pour permettre aux administrateurs non techniques d'ajouter, modifier ou supprimer des motifs directement en ligne.
+*   **Architecture Standardisée & CI/CD** : Utilisation d'HTML5 sémantique et de Tailwind CSS moderne. Processus de build optimisé par scripts Python et déploiement continu automatisé via Netlify (`netlify.toml`)."""
+
+    motif_project, motif_created = Project.objects.update_or_create(
+        slug='motif-237',
+        defaults={
+            'title': 'Motif 237 - Plateforme de Broderie Numérique',
+            'description': motif_desc_fr,
+            'short_description': 'Catalogue interactif moderne et boutique de motifs de broderie avec recherche dynamique, administration via Netlify CMS et prise de commande instantanée via WhatsApp.',
+            'category': 'web',
+            'technologies': 'HTML5, Tailwind CSS, Vanilla JavaScript (ES6+), Netlify CMS, Netlify Identity, Python Scripting, JSON',
+            'github_url': 'https://github.com/BenGeek237/motif-237',
+            'featured': True
+        }
+    )
+    if motif_created:
+        print(f"Projet '{motif_project.title}' créé avec succès.")
+    else:
+        print(f"Projet '{motif_project.title}' mis à jour.")
+
     # 4. Création de l'article de blog technique sur l'architecture Spring Boot
     blog_content = """## Introduction : Pourquoi Spring Boot 3 et Java 21 ?
 

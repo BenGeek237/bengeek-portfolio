@@ -9,12 +9,14 @@
       </router-view>
     </main>
     <Footer />
+    <ScrollToTop />
   </div>
 </template>
 
 <script setup>
 import Navbar from '@/components/layout/Navbar.vue'
 import Footer from '@/components/layout/Footer.vue'
+import ScrollToTop from '@/components/ui/ScrollToTop.vue'
 </script>
 
 <style>

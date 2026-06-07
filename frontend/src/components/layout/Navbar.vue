@@ -7,7 +7,7 @@
     <div class="nav-container">
       <!-- Brand -->
       <router-link to="/" class="navbar-brand" @click="goHome">
-        MAMOUDOU BIA
+        MAHMOUDOU BIA
       </router-link>
 
       <!-- Desktop links -->
@@ -22,7 +22,18 @@
             {{ item.name }}
           </a>
         </li>
+        <li class="nav-actions-mobile">
+          <button @click="toggleLanguage" class="nav-action-btn" aria-label="Toggle language">
+            {{ languageStore.currentLocale === 'fr' ? 'EN' : 'FR' }}
+          </button>
+        </li>
       </ul>
+
+      <div class="nav-actions-desktop">
+        <button @click="toggleLanguage" class="nav-action-btn" aria-label="Toggle language">
+          {{ languageStore.currentLocale === 'fr' ? 'EN' : 'FR' }}
+        </button>
+      </div>
 
       <!-- Hamburger -->
       <button
@@ -42,19 +53,28 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useLanguageStore } from '@/stores/language'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
+
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+const toggleLanguage = () => {
+  locale.value = languageStore.toggleLocale()
+}
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 const activeSection = ref('hero')
 
 const navItems = [
-  { name: 'À PROPOS',  id: 'about' },
   { name: 'SERVICES',  id: 'services' },
   { name: 'PORTFOLIO', id: 'projects' },
   { name: 'FORMATION', id: 'formation' },
+  { name: 'BLOG',      id: 'blog-preview' },
   { name: 'CONTACT',   id: 'contact' },
 ]
 
@@ -145,9 +165,9 @@ onUnmounted(() => {
 .navbar-brand {
   font-family: 'Open Sans', sans-serif;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.85rem;
   letter-spacing: 0.05em;
-  color: var(--accent);
+  color: #ffffff;
   text-decoration: none;
   text-transform: uppercase;
   transition: color 0.2s ease;
@@ -155,6 +175,14 @@ onUnmounted(() => {
 
 .navbar-brand:hover {
   color: var(--accent-hover);
+}
+
+.navbar-scrolled .navbar-brand {
+  color: #212529;
+}
+
+.navbar-scrolled .navbar-brand:hover {
+  color: var(--accent);
 }
 
 /* ---- Nav links ---- */
@@ -165,6 +193,40 @@ onUnmounted(() => {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.nav-actions-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-actions-mobile {
+  display: none;
+}
+
+.nav-action-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.navbar-scrolled .nav-action-btn {
+  color: #212529;
+}
+
+.nav-action-btn:hover {
+  color: var(--accent);
 }
 
 .nav-link {
@@ -254,7 +316,22 @@ onUnmounted(() => {
 
   .nav-link:hover,
   .nav-link-active {
-  color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+
+  .nav-actions-desktop {
+    display: none;
+  }
+
+  .nav-actions-mobile {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .nav-actions-mobile .nav-action-btn {
+    color: rgba(255,255,255,0.85) !important;
   }
 }
 </style>

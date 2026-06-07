@@ -1,78 +1,82 @@
 <template>
-  <section id="blog-preview" class="py-8 bg-gray-50 dark:bg-gray-900">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-6" data-aos="fade-up">
-        <h2 class="section-title">{{ locale === 'fr' ? 'Mon Blog Technique' : 'My Technical Blog' }}</h2>
-        <p class="section-subtitle text-lg">
+  <section id="blog-preview" class="section-dark section-padded">
+    <div class="container" style="max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;">
+      <div class="text-center" data-aos="fade-up" style="margin-bottom: 3rem;">
+        <h2 class="section-heading" style="color: #ffffff;">
+          {{ locale === 'fr' ? 'Mon Blog Technique' : 'My Technical Blog' }}
+        </h2>
+        <div class="section-divider-white"></div>
+        <p style="font-family: 'Merriweather', serif; font-style: italic; color: #a1a1aa; font-size: 0.95rem;">
           {{ locale === 'fr' ? 'Partages d\'expériences, tutoriels et bonnes pratiques' : 'Experience sharing, tutorials and best practices' }}
         </p>
       </div>
 
       <!-- Chargement -->
       <div v-if="loading" class="text-center py-10">
-        <div class="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600"></div>
+        <div class="spinner"></div>
       </div>
 
       <!-- Articles -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div v-else class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
         <div 
           v-for="(post, index) in latestPosts"
           :key="post.id"
-          class="card hover:scale-[1.02] hover:-translate-y-2 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-primary-500/20 group cursor-pointer overflow-hidden border border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:border-primary-500/50 hover:bg-white dark:hover:bg-gray-800 rounded-2xl"
+          class="blog-card"
           data-aos="fade-up"
           :data-aos-delay="index * 100"
         >
           <!-- Image (si disponible) -->
-          <div class="h-32 overflow-hidden relative">
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+          <div style="height: 180px; overflow: hidden; position: relative;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, #18181b 0%, transparent 100%); z-index: 10; opacity: 0.8;"></div>
             <img 
               v-if="post.image" 
               :src="post.image" 
               :alt="post.title"
-              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;"
+              class="blog-img"
             />
-            <div v-else class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-              <PencilSquareIcon class="w-12 h-12 text-gray-500" />
+            <div v-else style="width: 100%; height: 100%; background: #312e81; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;" class="blog-img">
+              <PencilSquareIcon style="width: 3rem; height: 3rem; color: #a1a1aa;" />
             </div>
             
             <!-- Date et Catégorie sur l'image -->
-            <div class="absolute top-3 right-3 z-20">
-              <span class="px-2.5 py-1 bg-primary-600/90 text-white text-[10px] uppercase font-bold tracking-wide rounded-full backdrop-blur-sm shadow-lg">
+            <div style="position: absolute; top: 1rem; right: 1rem; z-index: 20;">
+              <span class="blog-tag">
                 {{ post.category?.name || (locale === 'fr' ? 'Général' : 'General') }}
               </span>
             </div>
             
-            <div class="absolute bottom-3 left-3 z-20">
-              <span class="text-[10px] text-gray-200 font-mono bg-black/50 px-2 py-0.5 rounded backdrop-blur-sm">
+            <div style="position: absolute; bottom: 1rem; left: 1rem; z-index: 20;">
+              <span style="font-size: 0.75rem; color: #e4e4e7; font-family: 'Open Sans', sans-serif; background: rgba(0,0,0,0.5); padding: 0.2rem 0.5rem; border-radius: 4px;">
                 {{ formatDate(post.published_date) }}
               </span>
             </div>
           </div>
 
-          <div class="p-3">
+          <div style="padding: 1.5rem; text-align: left; display: flex; flex-direction: column; flex-grow: 1;">
             <!-- Titre -->
-            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1.5 group-hover:text-primary-600 transition-colors line-clamp-1">
+            <h3 class="blog-title">
               {{ post.title }}
             </h3>
 
             <!-- Extrait -->
-            <p class="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 text-[11px] leading-relaxed">
+            <p class="blog-desc">
               {{ post.excerpt || post.content.substring(0, 150) + '...' }}
             </p>
 
             <!-- Stats et Bouton -->
-            <div class="flex items-center justify-between mt-auto">
-              <div class="flex items-center text-[9px] text-gray-500 font-mono">
-                <span class="mr-3 flex items-center"><EyeIcon class="w-3 h-3 mr-1" /> {{ post.views || 0 }}</span>
-                <span class="flex items-center"><ClockIcon class="w-3 h-3 mr-1" /> {{ timeAgo(post.published_date) }}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 1rem; border-top: 1px solid #3f3f46;">
+              <div style="display: flex; align-items: center; font-size: 0.75rem; color: #a1a1aa; font-family: 'Open Sans', sans-serif;">
+                <span style="display: flex; align-items: center; margin-right: 1rem;"><EyeIcon style="width: 1rem; height: 1rem; margin-right: 0.25rem;" /> {{ post.views || 0 }}</span>
+                <span style="display: flex; align-items: center;"><ClockIcon style="width: 1rem; height: 1rem; margin-right: 0.25rem;" /> {{ timeAgo(post.published_date) }}</span>
               </div>
 
               <router-link 
                 :to="{ name: 'blog-post', params: { slug: post.slug } }"
-                class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-xs group/btn"
+                class="blog-link"
               >
                 {{ locale === 'fr' ? 'Lire' : 'Read' }}
-                <ArrowRightIcon class="w-3.5 h-3.5 ml-1 transform group-hover/btn:translate-x-1 transition-transform" />
+                <ArrowRightIcon style="width: 1rem; height: 1rem; margin-left: 0.25rem;" />
               </router-link>
             </div>
           </div>
@@ -81,30 +85,28 @@
         <!-- CTA si pas d'articles -->
         <div 
           v-if="latestPosts.length === 0"
-          class="md:col-span-3 card text-center py-8"
+          style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: #27272a; border-radius: 12px; border: 1px solid #3f3f46;"
         >
-          <div class="mb-3 flex justify-center">
-            <PencilSquareIcon class="w-16 h-16 text-gray-300 dark:text-gray-600" />
+          <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+            <PencilSquareIcon style="width: 4rem; height: 4rem; color: #52525b;" />
           </div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+          <h3 style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 1.25rem; color: #ffffff; margin-bottom: 0.5rem;">
             {{ locale === 'fr' ? 'Aucun article pour le moment' : 'No articles yet' }}
           </h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+          <p style="font-family: 'Merriweather', serif; color: #a1a1aa; font-size: 0.9rem; margin-bottom: 1.5rem;">
             {{ locale === 'fr' ? 'Les articles du blog seront bientôt disponibles !' : 'Blog articles coming soon!' }}
           </p>
-          <router-link to="/blog" class="btn-primary text-sm px-4 py-2">
+          <router-link to="/blog" class="btn-accent" style="padding: 0.75rem 1.5rem; font-size: 0.8rem;">
             {{ locale === 'fr' ? 'Voir le blog' : 'View blog' }}
           </router-link>
         </div>
       </div>
 
       <!-- Bouton vers blog complet -->
-      <div class="text-center mt-10" data-aos="fade-up">
-        <router-link to="/blog" class="inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-primary-600 to-purple-600 text-white font-black rounded-2xl shadow-xl shadow-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/50 hover:scale-105 transition-all duration-300 group">
+      <div style="text-align: center; margin-top: 3rem;" data-aos="fade-up">
+        <router-link to="/blog" class="btn-accent">
           <span>{{ locale === 'fr' ? 'Voir tous les articles' : 'View all articles' }}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-5 h-5 group-hover:translate-x-2 transition-transform">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
+          <ArrowRightIcon style="width: 1.25rem; height: 1.25rem; margin-left: 0.5rem;" />
         </router-link>
       </div>
     </div>
@@ -184,8 +186,59 @@ onMounted(() => {
 })
 </script>
 
-<style>
-.line-clamp-2 {
+<style scoped>
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #3f3f46;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.blog-card {
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent);
+}
+
+.blog-card:hover .blog-img {
+  transform: scale(1.05);
+}
+
+.blog-tag {
+  background: var(--accent);
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.blog-title {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -193,11 +246,36 @@ onMounted(() => {
   overflow: hidden;
 }
 
-.line-clamp-3 {
+.blog-card:hover .blog-title {
+  color: var(--accent-light);
+}
+
+.blog-desc {
+  font-family: 'Merriweather', serif;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  line-height: 1.6;
+  margin-bottom: 1rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.blog-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.blog-link:hover {
+  color: var(--accent-hover);
 }
 </style>

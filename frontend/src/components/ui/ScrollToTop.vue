@@ -1,20 +1,12 @@
 <template>
-  <Transition
-    enter-active-class="transition duration-300 ease-out"
-    enter-from-class="translate-y-10 opacity-0"
-    enter-to-class="translate-y-0 opacity-100"
-    leave-active-class="transition duration-200 ease-in"
-    leave-from-class="translate-y-0 opacity-100"
-    leave-to-class="translate-y-10 opacity-0"
-  >
+  <Transition name="fade-slide">
     <button
       v-if="showButton"
       @click="scrollToTop"
-      class="fixed bottom-6 right-6 md:bottom-10 md:right-10 w-12 h-12 md:w-14 md:h-14 bg-gray-900 border border-primary-500/50 text-primary-400 rounded-lg shadow-lg shadow-primary-500/20 hover:shadow-primary-500/50 hover:border-primary-400 hover:text-white hover:-translate-y-1 transition-all duration-300 flex items-center justify-center z-40 group overflow-hidden"
+      class="scroll-to-top"
       aria-label="Retour en haut"
     >
-      <div class="absolute inset-0 bg-gradient-to-tr from-primary-600/20 to-secondary-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      <ChevronUpIcon class="w-6 h-6 md:w-8 md:h-8 relative z-10 group-hover:animate-bounce" />
+      <ChevronUpIcon class="scroll-icon" />
     </button>
   </Transition>
 </template>
@@ -44,3 +36,47 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<style scoped>
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 50%;
+  color: #a1a1aa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-top:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  transform: translateY(-5px);
+}
+
+.scroll-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+</style>

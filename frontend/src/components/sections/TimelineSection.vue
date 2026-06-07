@@ -57,7 +57,7 @@ const { locale } = useI18n()
 
 const timelineItems = computed(() => [
   {
-    years: '2022 - 2024',
+    years: '2022',
     title: locale.value === 'fr'
       ? 'Licence Informatique — Génie Logiciel'
       : 'Bachelor\'s Degree — Software Engineering',
@@ -88,6 +88,17 @@ const timelineItems = computed(() => [
       : 'Mastery of Photoshop, Illustrator, Canva and Figma. Visual identity creation, UI/UX mockups and communication materials.',
     image: null,
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="timeline-svg"><path fill-rule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.5-.277z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M10.832 20.019a.75.75 0 01-1.04-.265l-2.182-3.82a.75.75 0 01.265-1.04c.182-.104.385-.184.606-.234A6.767 6.767 0 0112 14.25c.186 0 .368.016.545.048.223.04.428.121.61.226a.75.75 0 01.265 1.04l-2.182 3.82a.75.75 0 01-1.04.265l-.366-.21zm-2.905-2.091l1.884 3.298a2.25 2.25 0 003.882-.001l1.884-3.297a8.272 8.272 0 00-1.89-1.002 8.274 8.274 0 00-1.886 1.002z" clip-rule="evenodd"/></svg>`,
+  },
+  {
+    years: '2019',
+    title: locale.value === 'fr'
+      ? 'BAC TI'
+      : 'High School Diploma in IT',
+    desc: locale.value === 'fr'
+      ? 'Lycée classique et moderne de Ngaoundéré.'
+      : 'Lycée classique et moderne de Ngaoundéré.',
+    image: null,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="timeline-svg"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z"/></svg>`,
   },
   {
     years: locale.value === 'fr' ? 'Autodidacte' : 'Self-taught',

@@ -1,250 +1,105 @@
 <template>
-  <nav class="fixed top-0 w-full z-50 border-b transition-colors duration-300"
-       :class="themeStore.darkMode
-         ? 'bg-gray-950/95 border-gray-800 backdrop-blur-sm'
-         : 'bg-white/95 border-gray-200 backdrop-blur-sm'">
-    <div class="container mx-auto px-6 sm:px-8">
-      <div class="flex justify-between items-center h-16">
+  <nav
+    id="mainNav"
+    class="navbar"
+    :class="{ 'navbar-scrolled': isScrolled }"
+  >
+    <div class="nav-container">
+      <!-- Brand -->
+      <router-link to="/" class="navbar-brand" @click="goHome">
+        MAMOUDOU BIA
+      </router-link>
 
-        <!-- Logo -->
-        <router-link to="/" class="flex items-center gap-2.5 group">
-          <img
-            src="/logo/bg.png"
-            alt="BenGeek Logo"
-            class="w-9 h-9 rounded-lg object-contain"
-            :class="themeStore.darkMode ? 'bg-white/10' : 'bg-gray-100'"
-          />
-          <div class="flex flex-col leading-none">
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">Mamoudou Bia</span>
-            <span class="text-[11px] text-gray-400 dark:text-gray-500 font-normal">Fullstack Developer</span>
-          </div>
-        </router-link>
-
-        <!-- Navigation Desktop -->
-        <div class="hidden md:flex items-center gap-1">
-          <template v-for="item in navItems" :key="item.name">
-            <router-link
-              v-if="item.id === 'projects'"
-              to="/projects"
-              class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150"
-              :class="route.path.includes('/projects')
-                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/60'"
-            >{{ item.name }}</router-link>
-
-            <button
-              v-else
-              @click="scrollToSection(item.id)"
-              class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150"
-              :class="activeSection === item.id
-                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/60'"
-            >{{ item.name }}</button>
-          </template>
-
-          <div class="w-px h-4 bg-gray-200 dark:bg-gray-800 mx-1"></div>
-
-          <router-link
-            to="/blog"
-            class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150"
-            :class="route.path.includes('/blog')
-              ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-              : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/60'"
-          >Blog</router-link>
-        </div>
-
-        <!-- Actions -->
-        <div class="hidden md:flex items-center gap-2">
-          <!-- Toggle langue -->
-          <button
-            @click="toggleLanguage"
-            class="px-3 py-1.5 text-xs font-semibold rounded-md transition-colors duration-150"
-            :class="themeStore.darkMode
-              ? 'text-gray-400 hover:text-white hover:bg-gray-800'
-              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'"
-            aria-label="Toggle language"
+      <!-- Desktop links -->
+      <ul class="nav-links" :class="{ 'nav-open': isMobileMenuOpen }">
+        <li v-for="item in navItems" :key="item.id">
+          <a
+            href="#"
+            @click.prevent="scrollToSection(item.id)"
+            class="nav-link"
+            :class="{ 'nav-link-active': activeSection === item.id }"
           >
-            <transition name="lang" mode="out-in">
-              <span :key="locale">{{ locale.toUpperCase() }}</span>
-            </transition>
-          </button>
+            {{ item.name }}
+          </a>
+        </li>
+      </ul>
 
-          <!-- Toggle thème -->
-          <button
-            @click="toggleTheme"
-            class="p-2 rounded-md transition-colors duration-150"
-            :class="themeStore.darkMode
-              ? 'text-gray-400 hover:text-white hover:bg-gray-800'
-              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'"
-            aria-label="Toggle theme"
-          >
-            <svg v-if="themeStore.darkMode" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
-            </svg>
-            <svg v-else class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-            </svg>
-          </button>
-
-          <!-- CTA Contact -->
-          <button
-            @click="scrollToSection('contact')"
-            class="btn-primary ml-1"
-          >
-            {{ t('nav.contact') }}
-          </button>
-        </div>
-
-        <!-- Hamburger Mobile -->
-        <button
-          @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="md:hidden p-2 rounded-md transition-colors"
-          :class="themeStore.darkMode ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-100'"
-          aria-label="Menu mobile"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path v-if="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Menu Mobile -->
-      <transition
-        enter-active-class="transition-all duration-200 ease-out"
-        enter-from-class="opacity-0 -translate-y-2"
-        enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition-all duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-2"
+      <!-- Hamburger -->
+      <button
+        class="hamburger"
+        :class="{ open: isMobileMenuOpen }"
+        @click="isMobileMenuOpen = !isMobileMenuOpen"
+        aria-label="Menu mobile"
       >
-        <div
-          v-if="isMobileMenuOpen"
-          class="md:hidden border-t py-3 space-y-0.5"
-          :class="themeStore.darkMode ? 'border-gray-800' : 'border-gray-200'"
-        >
-          <template v-for="item in navItems" :key="item.name">
-            <router-link
-              v-if="item.id === 'projects'"
-              to="/projects"
-              @click="isMobileMenuOpen = false"
-              class="block px-3 py-2.5 text-sm font-medium rounded-md transition-colors"
-              :class="route.path.includes('/projects')
-                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
-            >{{ item.name }}</router-link>
-
-            <button
-              v-else
-              @click="scrollToSection(item.id); isMobileMenuOpen = false"
-              class="block w-full text-left px-3 py-2.5 text-sm font-medium rounded-md transition-colors"
-              :class="activeSection === item.id
-                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
-            >{{ item.name }}</button>
-          </template>
-
-          <router-link
-            to="/blog"
-            @click="isMobileMenuOpen = false"
-            class="block px-3 py-2.5 text-sm font-medium rounded-md transition-colors"
-            :class="route.path.includes('/blog')
-              ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800'
-              : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
-          >Blog</router-link>
-
-          <div class="pt-2 mt-2 border-t flex items-center gap-2 px-3"
-               :class="themeStore.darkMode ? 'border-gray-800' : 'border-gray-200'">
-            <button @click="toggleLanguage"
-              class="px-3 py-2 text-xs font-semibold rounded-md"
-              :class="themeStore.darkMode ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-100'"
-            >{{ locale.toUpperCase() }}</button>
-            <button @click="toggleTheme"
-              class="p-2 rounded-md"
-              :class="themeStore.darkMode ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-100'"
-            >
-              <svg v-if="themeStore.darkMode" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
-              </svg>
-              <svg v-else class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            </button>
-            <button
-              @click="scrollToSection('contact'); isMobileMenuOpen = false"
-              class="flex-1 btn-primary text-center"
-            >{{ t('nav.contact') }}</button>
-          </div>
-        </div>
-      </transition>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useThemeStore } from '@/stores/theme'
-import { useI18n } from 'vue-i18n'
-import { useLanguageStore } from '@/stores/language'
 
 const router = useRouter()
 const route = useRoute()
-const themeStore = useThemeStore()
-const { t, locale } = useI18n()
-const languageStore = useLanguageStore()
 
+const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 const activeSection = ref('hero')
 
-const navItems = computed(() => [
-  { name: t('nav.home'),     id: 'hero' },
-  { name: t('nav.about'),    id: 'about' },
-  { name: t('nav.projects'), id: 'projects' },
-  { name: t('nav.skills'),   id: 'skills' },
-])
-
-const toggleLanguage = () => {
-  const newLocale = languageStore.toggleLocale()
-  locale.value = newLocale
-}
-
-const scrollToSection = (sectionId) => {
-  if (route.path !== '/') {
-    router.push('/')
-    setTimeout(() => scrollToElement(sectionId), 100)
-  } else {
-    scrollToElement(sectionId)
-  }
-  isMobileMenuOpen.value = false
-}
-
-const scrollToElement = (elementId) => {
-  const el = document.getElementById(elementId)
-  if (el) {
-    const offset = 72
-    const top = el.getBoundingClientRect().top + window.pageYOffset - offset
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
-}
+const navItems = [
+  { name: 'À PROPOS',  id: 'about' },
+  { name: 'SERVICES',  id: 'services' },
+  { name: 'PORTFOLIO', id: 'projects' },
+  { name: 'FORMATION', id: 'formation' },
+  { name: 'CONTACT',   id: 'contact' },
+]
 
 const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
   if (route.path !== '/') return
-  const sections = navItems.value.map(item => document.getElementById(item.id))
+  const sections = navItems.map(item => document.getElementById(item.id))
   const scrollY = window.scrollY + 100
   for (let i = sections.length - 1; i >= 0; i--) {
     if (sections[i] && scrollY >= sections[i].offsetTop) {
-      activeSection.value = navItems.value[i].id
+      activeSection.value = navItems[i].id
       break
     }
   }
 }
 
-const handleKeydown = (e) => {
-  if (e.key === 'Escape' && isMobileMenuOpen.value) isMobileMenuOpen.value = false
+const scrollToSection = (id) => {
+  isMobileMenuOpen.value = false
+  if (route.path !== '/') {
+    router.push('/').then(() => {
+      setTimeout(() => scrollToElement(id), 150)
+    })
+  } else {
+    scrollToElement(id)
+  }
 }
 
-const toggleTheme = () => themeStore.toggleTheme()
+const scrollToElement = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    const offset = 70
+    const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
+const goHome = () => {
+  isMobileMenuOpen.value = false
+  if (route.path !== '/') router.push('/')
+  else window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const handleKeydown = (e) => {
+  if (e.key === 'Escape') isMobileMenuOpen.value = false
+}
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -259,6 +114,147 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.lang-enter-active, .lang-leave-active { transition: opacity 0.15s ease; }
-.lang-enter-from, .lang-leave-to { opacity: 0; }
+/* ---- Navbar base ---- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1.2rem 0;
+  background: transparent;
+  transition: background 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Après scroll : fond blanc */
+.navbar-scrolled {
+  background: #ffffff;
+  padding: 0.6rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.nav-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---- Brand ---- */
+.navbar-brand {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.navbar-brand:hover {
+  color: var(--accent-hover);
+}
+
+/* ---- Nav links ---- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.5rem 0.85rem;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+  display: block;
+}
+
+.navbar-scrolled .nav-link {
+  color: #212529;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  color: #6366f1;
+}
+
+/* ---- Hamburger ---- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.navbar-scrolled .hamburger span {
+  background: #212529;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---- Mobile ---- */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    background: #212529;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+    gap: 0.5rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 200;
+  }
+
+  .nav-links.nav-open {
+    transform: translateX(0);
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.85) !important;
+    padding: 0.75rem 0;
+    width: 100%;
+  }
+
+  .nav-link:hover,
+  .nav-link-active {
+  color: var(--accent) !important;
+  }
+}
 </style>

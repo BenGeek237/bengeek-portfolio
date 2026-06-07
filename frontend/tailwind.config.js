@@ -8,37 +8,50 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Palette neutre et classique
         accent: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1', // Indigo principal
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
+          DEFAULT: '#6366f1',   /* Indigo-500 */
+          hover:   '#4f46e5',   /* Indigo-600 */
+          light:   '#818cf8',   /* Indigo-400 */
+        },
+        dark: {
+          DEFAULT: '#18181b',   /* Zinc-900 */
+          800:     '#27272a',
+          900:     '#09090b',
+        },
+        section: {
+          DEFAULT: '#312e81',   /* Indigo-900 – remplace l'orange */
+        },
+        light: {
+          DEFAULT: '#fafafa',
+          100:     '#ffffff',
         },
       },
       fontFamily: {
-        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        'serif': ['Lora', 'Georgia', 'serif'],
+        'heading': ['"Open Sans"', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'body':    ['Merriweather', 'Georgia', 'serif'],
+        'sans':    ['"Open Sans"', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'slide-up': 'slideUp 0.4s ease-out forwards',
+        'fade-in':  'fadeIn 0.6s ease-out forwards',
+        'slide-up': 'slideUp 0.5s ease-out forwards',
+        'float':    'float 6s ease-in-out infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
+        fadeIn:  {
+          '0%':   { opacity: '0', transform: 'translateY(16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%':   { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%':      { transform: 'translateY(-10px)' },
+        },
+      },
+      borderRadius: {
+        'pill': '300px',
       },
     },
   },

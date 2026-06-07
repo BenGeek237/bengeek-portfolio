@@ -1,138 +1,125 @@
 <template>
-  <section id="projects" class="py-24 bg-gray-50 dark:bg-gray-900 section-diagonal-top">
-    <div class="container mx-auto px-6 sm:px-8">
-
-      <!-- Titre stylisé + lien voir tout -->
-      <div class="flex flex-wrap items-end justify-between gap-4 mb-12" data-aos="fade-up">
-        <h2 class="section-styled-title">
-          -{{ locale === 'fr' ? 'Portfolio' : 'Portfolio' }}-
+  <section id="projects" class="section-light section-padded">
+    <div class="projects-container">
+      <!-- Header -->
+      <div data-aos="fade-up">
+        <h2 class="section-heading" style="text-transform: uppercase; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0.05em;">
+          PORTFOLIO
         </h2>
-        <router-link v-if="limit" to="/projects"
-          class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors underline-animated font-medium">
-          {{ locale === 'fr' ? 'Voir tout →' : 'View all →' }}
-        </router-link>
-      </div>
-
-      <!-- Filtres (page complète seulement) -->
-      <div v-if="!limit" class="flex flex-wrap gap-2 mb-10" data-aos="fade-up">
-        <button
-          @click="filter = 'all'"
-          class="px-4 py-1.5 text-sm rounded-full border font-medium transition-all duration-200"
-          :class="filter === 'all'
-            ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 border-gray-900 dark:border-white'
-            : 'border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-500'"
-        >{{ locale === 'fr' ? 'Tout' : 'All' }}</button>
-        <button
-          v-for="cat in categories" :key="cat"
-          @click="filter = cat"
-          class="px-4 py-1.5 text-sm rounded-full border font-medium capitalize transition-all duration-200"
-          :class="filter === cat
-            ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 border-gray-900 dark:border-white'
-            : 'border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-500'"
-        >{{ getCategoryLabel(cat) }}</button>
+        <p class="projects-subtitle">
+          {{ locale === 'fr' ? 'Présentation de mes dernières expériences.' : 'Presentation of my latest experiences.' }}
+        </p>
+        <div class="section-divider"></div>
       </div>
 
       <!-- Loading -->
-      <div v-if="loading" class="flex items-center justify-center py-24">
-        <div class="animate-spin w-6 h-6 border-2 border-gray-900 dark:border-white border-t-transparent rounded-full"></div>
+      <div v-if="loading" class="loading-wrap">
+        <div class="spinner"></div>
       </div>
 
       <!-- Error -->
-      <div v-else-if="error" class="py-16 text-center">
-        <p class="text-gray-500 dark:text-gray-400 mb-4">{{ error }}</p>
-        <button @click="fetchProjects" class="btn-secondary">
+      <div v-else-if="error" class="error-wrap">
+        <p>{{ error }}</p>
+        <button class="btn-accent" @click="fetchProjects">
           {{ locale === 'fr' ? 'Réessayer' : 'Retry' }}
         </button>
       </div>
 
       <!-- Empty -->
-      <div v-else-if="filteredProjects.length === 0" class="py-16 text-center">
-        <p class="text-gray-400 text-sm">{{ locale === 'fr' ? 'Aucun projet trouvé.' : 'No projects found.' }}</p>
+      <div v-else-if="displayedProjects.length === 0" class="empty-wrap">
+        <p>{{ locale === 'fr' ? 'Aucun projet trouvé.' : 'No projects found.' }}</p>
       </div>
 
-      <!-- Grille de projets -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Portfolio grid -->
+      <div v-else class="portfolio-grid" data-aos="fade-up" data-aos-delay="100">
         <div
-          v-for="(project, index) in filteredProjects"
+          v-for="(project, index) in displayedProjects"
           :key="project.id"
-          class="project-card group relative rounded-2xl overflow-hidden bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+          class="portfolio-item"
+          @click="openModal(project)"
           data-aos="fade-up"
           :data-aos-delay="index * 60"
         >
-          <!-- Image -->
-          <div class="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
-            <img
-              v-if="project.image"
-              :src="project.image"
-              :alt="project.title"
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div v-else class="w-full h-full flex items-center justify-center">
-              <span class="text-4xl text-gray-300 dark:text-gray-700 font-mono">{ }</span>
-            </div>
-
-            <!-- Overlay au hover avec liens -->
-            <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-              <a v-if="project.github_url" :href="project.github_url" target="_blank"
-                 class="flex items-center gap-2 px-4 py-2 bg-white text-gray-900 text-xs font-semibold rounded-full hover:bg-gray-100 transition-colors"
-                 @click.stop>
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
-                </svg>
-                Code
-              </a>
-              <a v-if="project.live_url" :href="project.live_url" target="_blank"
-                 class="flex items-center gap-2 px-4 py-2 bg-accent-600 text-white text-xs font-semibold rounded-full hover:bg-accent-700 transition-colors"
-                 @click.stop>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                </svg>
-                Demo
-              </a>
-            </div>
-
-            <!-- Badges statut -->
-            <div class="absolute top-3 left-3 flex gap-1.5">
-              <span v-if="project.featured"
-                class="px-2.5 py-0.5 bg-white/90 text-gray-800 text-[10px] font-bold rounded-full backdrop-blur-sm">
-                ⭐ Featured
-              </span>
-              <span v-if="project.live_url"
-                class="px-2.5 py-0.5 bg-emerald-500/90 text-white text-[10px] font-bold rounded-full backdrop-blur-sm">
-                ● Live
-              </span>
-            </div>
+          <img
+            v-if="project.image"
+            :src="project.image"
+            :alt="project.title"
+            loading="lazy"
+          />
+          <div v-else class="portfolio-placeholder">
+            <span>{{ project.title.charAt(0) }}</span>
           </div>
 
-          <!-- Contenu carte -->
-          <div class="p-5">
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h3 class="text-sm font-bold text-gray-900 dark:text-white leading-snug line-clamp-1">
-                {{ project.title }}
-              </h3>
-              <span class="text-[10px] font-semibold text-accent-600 dark:text-accent-400 uppercase tracking-wide flex-shrink-0">
-                {{ getCategoryLabel(project.category) }}
-              </span>
-            </div>
-
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4 line-clamp-2">
-              {{ project.short_description || project.description }}
-            </p>
-
-            <!-- Badges tech arrondis style Nicolas Wadoux -->
-            <div class="flex flex-wrap gap-1.5">
-              <span
-                v-for="tech in (project.technologies_list || []).slice(0, 4)"
-                :key="tech"
-                class="px-2.5 py-0.5 text-[10px] font-medium rounded-full border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 bg-transparent"
-              >{{ tech.trim() }}</span>
-            </div>
+          <!-- Overlay orange au hover -->
+          <div class="portfolio-overlay">
+            <span class="portfolio-plus">+</span>
           </div>
         </div>
       </div>
 
+      <!-- "Voir tout" link sur la home -->
+      <div v-if="limit && projects.length > limit" class="see-all-wrap" data-aos="fade-up">
+        <router-link to="/projects" class="btn-accent">
+          {{ locale === 'fr' ? 'Voir tous les projets' : 'View all projects' }}
+        </router-link>
+      </div>
     </div>
+
+    <!-- Modal projet -->
+    <Teleport to="body">
+      <Transition name="modal-fade">
+        <div v-if="activeProject" class="project-modal-overlay" @click.self="closeModal">
+          <div class="project-modal-box">
+            <button class="project-modal-close" @click="closeModal" aria-label="Fermer">✕</button>
+
+            <h3 class="modal-title">{{ activeProject.title }}</h3>
+            <p class="modal-category">{{ getCategoryLabel(activeProject.category) }}</p>
+
+            <img
+              v-if="activeProject.image"
+              :src="activeProject.image"
+              :alt="activeProject.title"
+              class="modal-image"
+            />
+
+            <p class="modal-desc">{{ activeProject.description || activeProject.short_description }}</p>
+
+            <!-- Tech tags -->
+            <div class="modal-tags" v-if="activeProject.technologies_list?.length">
+              <span
+                v-for="tech in activeProject.technologies_list.slice(0, 6)"
+                :key="tech"
+                class="modal-tag"
+              >{{ tech.trim() }}</span>
+            </div>
+
+            <!-- Links -->
+            <div class="modal-links">
+              <a
+                v-if="activeProject.github_url"
+                :href="activeProject.github_url"
+                target="_blank"
+                class="btn-accent"
+              >
+                GitHub
+              </a>
+              <a
+                v-if="activeProject.live_url"
+                :href="activeProject.live_url"
+                target="_blank"
+                class="btn-light-pill"
+                style="border: 2px solid #212529;"
+              >
+                {{ locale === 'fr' ? 'Voir le site' : 'View site' }}
+              </a>
+              <button class="btn-secondary" @click="closeModal">
+                {{ locale === 'fr' ? 'Retour' : 'Back' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </section>
 </template>
 
@@ -144,24 +131,31 @@ import { useI18n } from 'vue-i18n'
 const { locale } = useI18n()
 
 const props = defineProps({
-  limit: { type: Number, default: 0 }
+  limit: { type: Number, default: 0 },
 })
 
 const projects = ref([])
 const loading = ref(true)
 const error = ref(null)
-const filter = ref('all')
+const activeProject = ref(null)
 
-const categories = computed(() => [...new Set(projects.value.map(p => p.category))].sort())
+const displayedProjects = computed(() =>
+  props.limit > 0 ? projects.value.slice(0, props.limit) : projects.value
+)
 
-const filteredProjects = computed(() => {
-  let result = filter.value === 'all' ? projects.value : projects.value.filter(p => p.category === filter.value)
-  return props.limit > 0 ? result.slice(0, props.limit) : result
-})
-
-const getCategoryLabel = (category) => {
+const getCategoryLabel = (cat) => {
   const labels = { web: 'Web', mobile: 'Mobile', ai: 'IA', design: 'Design', other: 'Autre' }
-  return labels[category] || category
+  return labels[cat] || cat
+}
+
+const openModal = (project) => {
+  activeProject.value = project
+  document.body.style.overflow = 'hidden'
+}
+
+const closeModal = () => {
+  activeProject.value = null
+  document.body.style.overflow = ''
 }
 
 const fetchProjects = async () => {
@@ -182,3 +176,191 @@ const fetchProjects = async () => {
 
 onMounted(fetchProjects)
 </script>
+
+<style scoped>
+.projects-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.projects-subtitle {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+/* Grid */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+}
+
+/* Items */
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #e9ecef;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-placeholder {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #adb5bd;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Orange overlay */
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(240, 95, 64, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-plus {
+  font-size: 3.5rem;
+  color: #ffffff;
+  font-weight: 300;
+  line-height: 1;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* See all */
+.see-all-wrap {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Loading / Error */
+.loading-wrap, .empty-wrap, .error-wrap {
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #dee2e6;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Modal */
+.modal-title {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.modal-category {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6366f1;
+  margin-bottom: 1.25rem;
+}
+
+.modal-image {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1.25rem;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.modal-desc {
+  font-family: 'Merriweather', serif;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-tag {
+  padding: 0.3rem 0.85rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 300px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.modal-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Modal transitions */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+</style>
